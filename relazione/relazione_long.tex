@@ -12,6 +12,7 @@
 \graphicspath{{./images/}}
 
 \newcommand{\err}[1]{\textcolor{red}{#1}}
+\newcommand{\ext}[1]{\textcolor{blue}{#1}}
 \crefname{table}{tab.}{tab.}
 
 \title{Transizione di fase nel modello Erdős-Rényi-Gilbert: l'emersione della componente gigante}
@@ -23,24 +24,17 @@
 
 \renewcommand{\abstractname}{Abstract}
 \begin{abstract}
-    
+    Il presente elaborato analizza le proprietà strutturali dei grafi casuali secondo il modello di Erdős-Rényi $G(N, p)$, con particolare attenzione ai fenomeni critici che emergono al variare della connettività media.
+Attraverso un approccio teorico di campo medio (Mean Field), basato sulla teoria dei processi di ramificazione, viene derivata analiticamente la soglia di percolazione $\langle k \rangle_c = 1$ e l'equazione di autoconsistenza per la dimensione della componente gigante ($S$).
+Le previsioni teoriche sono state verificate mediante simulazioni numeriche su reticoli di dimensione finita. I risultati confermano l'esistenza di una transizione di fase topologica del secondo ordine: in corrispondenza del punto critico, si osserva l'emersione spontanea dell'ordine (rottura di simmetria) e la divergenza della dimensione media dei cluster finiti, analoga alla suscettività nei sistemi ferromagnetici descritti dalla teoria di Landau.
 \end{abstract}
 
 \section{Introduzione}
+Esiste un'ampia varietà di sistemi complessi che emergono in natura, nella società e nella tecnologia aventi delle strutture a network. Questi sistemi sono caratterizzati da un gran numero di componenti interagenti, che danno origine a comportamenti collettivi emergenti che non possono essere facilmente previsti o compresi partendo dalla sola conoscenza dei singoli componenti. \ext{ Ad esempio, la cellula è descritta efficacemente come una rete complessa di sostanze chimiche connesse da reazioni chimiche; Internet è una rete complessa di router e computer collegati tramite vari collegamenti fisici o wireless; mode e idee si diffondono sulle reti sociali, dove i nodi sono esseri umani e i link rappresentano diverse relazioni sociali.} La grande scoperta della network science è che, nonostante l'evidente diversità dei sistemi complessi, la struttura e l'evoluzione delle reti sottostanti a ciascun sistema sono guidate da un insieme comune di leggi e principi fondamentali. Pertanto, nonostante le sorprendenti differenze in termini di forma, dimensione, natura e scopo delle reti reali, la maggior parte di esse è governata da principi organizzativi comuni. Una volta astratta la natura dei componenti e la specifica tipologia delle interazioni tra di essi, le reti risultanti appaiono più simili che differenti tra loro \cite[Sez. 1.2-1.3]{barabasi2016network}. \ext{ Di conseguenza, possiamo utilizzare un insieme comune di strumenti matematici per esplorare questi sistemi.} 
 
-\err{Aggiungi esempi di reti reali: sociali, internet, biologiche, ecc.}
-
-Complex weblike structures describe a wide variety
-of systems of high technological and intellectual importance. For example, the cell is best described as a complex network of chemicals connected by chemical reactions; the Internet is a complex network of routers and
-computers linked by various physical or wireless links;
-fads and ideas spread on the social network whose nodes
-are human beings and edges represent various social relationships; the Wold-Wide Web is an enormous virtual
-network of webpages connected by hyperlinks \cite[Sez. 1]{albert2002statistical}.
-
-These systems are collectively called complex systems, capturing the fact that it is difficult to derive their collective behavior from a knowledge of the system's components. Given the important role complex systems play in our daily life, in science and in economy, their understanding, mathematical description, prediction, and eventually control is one of the major intellectual and scientific challenges of the 21st century.
-At the end, networks permeate science, technology, business and nature to a much higher degree than it may be evident upon a casual inspection. Consequently, we will never understand complex systems unless we develop a deep understanding of the networks behind them. The exploding interest in network science during the first decade of the 21st century is rooted in the discovery that despite the obvious diversity of complex systems, the structure and the evolution of the networks behind each system is driven by a common set of fundamental laws and principles. Therefore, notwithstanding the amazing differences in form, size, nature, age, and scope of real networks, most networks are driven by common organizing principles. Once we disregard the nature of the components and the precise nature of the interactions between them, the obtained networks are more similar than different from each other.
-
-A key discovery of network science is that the architecture of networks emerging in various domains of science, nature, and technology are similar to each other, a consequence of being governed by the same organizing principles. Consequently we can use a common set of mathematical tools to explore these systems \cite[Sez. 1.2]{barabasi2016network}.
+La Network Science si pone l'obiettivo di costruire modelli in grado di riprodurre le proprietà delle reti reali.
+Dal punto di vista della modellistica, una rete è un oggetto relativamente semplice, costituito soltanto da nodi e link. La vera sfida, tuttavia, risiede nel decidere come posizionare i link tra i nodi affinché si possa riprodurre la complessità di un sistema reale. Tuttavia, la maggior parte delle reti osservabili non possiede una struttura regolare evidente; al contrario, a una prima analisi esse appaiono come se si fossero organizzate in modo casuale.
+A tal proposito, la filosofia alla base dei Random Network è semplice: si assume che questo obiettivo venga raggiunto al meglio distribuendo i link tra i nodi in modo puramente casuale . Il modello di Random Network più ampiamente studiato è il modello di Erdős-Rényi-Gilbert, che approfondiremo nelle sezioni successive \cite[Sez. 3.2]{barabasi2016network}.
 
 \section{Elementi di teoria dei grafi}
 \section{Modello di Erdős-Rényi-Gilbert}

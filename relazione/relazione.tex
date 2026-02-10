@@ -12,6 +12,7 @@
 \graphicspath{{./images/}}
 
 \newcommand{\err}[1]{\textcolor{red}{#1}}
+\newcommand{\ext}[1]{\textcolor{blue}{#1}}
 \crefname{table}{tab.}{tab.}
 
 \title{Transizione di fase nel modello Erdős-Rényi-Gilbert: l'emersione della componente gigante}
@@ -27,9 +28,7 @@
 \end{abstract}
 
 \section{Introduzione}
-Esiste un'ampia varietà di sistemi complessi che emergono in natura, nella società e nella tecnologia. Questi sistemi sono caratterizzati da un gran numero di componenti interagenti, che danno origine a comportamenti collettivi emergenti che non possono essere facilmente previsti o compresi partendo dalla sola conoscenza dei singoli componenti.\err{ Ad esempio, la cellula è descritta efficacemente come una rete complessa di sostanze chimiche connesse da reazioni chimiche; Internet è una rete complessa di router e computer collegati tramite vari collegamenti fisici o wireless; mode e idee si diffondono sulle reti sociali, dove i nodi sono esseri umani e i link rappresentano diverse relazioni sociali.}
- L'esplosione di interesse verso Network Science nel primo decennio del XXI secolo affonda le radici nella scoperta che, nonostante l'evidente diversità dei sistemi complessi, la struttura e l'evoluzione delle reti sottostanti a ciascun sistema sono guidate da un insieme comune di leggi e principi fondamentali. Pertanto, nonostante le sorprendenti differenze in termini di forma, dimensione, natura, età e scopo delle reti reali, la maggior parte di esse è governata da principi organizzativi comuni. Una volta astratta la natura dei componenti e la specifica tipologia delle interazioni tra di essi, le reti risultanti appaiono più simili che differenti tra loro.
- Di conseguenza, possiamo utilizzare un insieme comune di strumenti matematici per esplorare questi sistemi \cite[Sez. 1.2]{barabasi2016network}.
+Esiste un'ampia varietà di sistemi complessi che emergono in natura, nella società e nella tecnologia. Questi sistemi sono caratterizzati da un gran numero di componenti interagenti, che danno origine a comportamenti collettivi emergenti che non possono essere facilmente previsti o compresi partendo dalla sola conoscenza dei singoli componenti.\ext{ Ad esempio, la cellula è descritta efficacemente come una rete complessa di sostanze chimiche connesse da reazioni chimiche; Internet è una rete complessa di router e computer collegati tramite vari collegamenti fisici o wireless; mode e idee si diffondono sulle reti sociali, dove i nodi sono esseri umani e i link rappresentano diverse relazioni sociali.} La grande scoperta della network science è che, nonostante l'evidente diversità dei sistemi complessi, la struttura e l'evoluzione delle reti sottostanti a ciascun sistema sono guidate da un insieme comune di leggi e principi fondamentali. Pertanto, nonostante le sorprendenti differenze in termini di forma, dimensione, natura e scopo delle reti reali, la maggior parte di esse è governata da principi organizzativi comuni. Una volta astratta la natura dei componenti e la specifica tipologia delle interazioni tra di essi, le reti risultanti appaiono più simili che differenti tra loro. Di conseguenza, possiamo utilizzare un insieme comune di strumenti matematici per esplorare questi sistemi.
 
 \section{Elementi di teoria dei grafi}
 \section{Modello di Erdős-Rényi-Gilbert}
