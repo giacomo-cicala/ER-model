@@ -15,7 +15,7 @@
 \newcommand{\ext}[1]{\textcolor{blue}{#1}}
 \crefname{table}{tab.}{tab.}
 
-\title{Transizione di fase nel modello Erdős-Rényi-Gilbert: l'emersione della componente gigante}
+\title{Percolazione e robustezza nelle reti complesse: analisi della transizione di fase nel modello Erdős-Rényi-Gilbert}
 \author{Giacomo Cicala}
 \date{\today}
 
@@ -23,21 +23,63 @@
 \maketitle
 
 \renewcommand{\abstractname}{Abstract}
-\begin{abstract}
-    Il presente elaborato analizza le proprietà strutturali dei grafi casuali secondo il modello di Erdős-Rényi $G(N, p)$, con particolare attenzione ai fenomeni critici che emergono al variare della connettività media.
-Attraverso un approccio teorico di campo medio (Mean Field), basato sulla teoria dei processi di ramificazione, viene derivata analiticamente la soglia di percolazione $\langle k \rangle_c = 1$ e l'equazione di autoconsistenza per la dimensione della componente gigante ($S$).
-Le previsioni teoriche sono state verificate mediante simulazioni numeriche su reticoli di dimensione finita. I risultati confermano l'esistenza di una transizione di fase topologica del secondo ordine: in corrispondenza del punto critico, si osserva l'emersione spontanea dell'ordine (rottura di simmetria) e la divergenza della dimensione media dei cluster finiti, analoga alla suscettività nei sistemi ferromagnetici descritti dalla teoria di Landau.
-\end{abstract}
 
 \section{Introduzione}
-Esiste un'ampia varietà di sistemi complessi che emergono in natura, nella società e nella tecnologia aventi delle strutture a network. Questi sistemi sono caratterizzati da un gran numero di componenti interagenti, che danno origine a comportamenti collettivi emergenti che non possono essere facilmente previsti o compresi partendo dalla sola conoscenza dei singoli componenti. \ext{ Ad esempio, la cellula è descritta efficacemente come una rete complessa di sostanze chimiche connesse da reazioni chimiche; Internet è una rete complessa di router e computer collegati tramite vari collegamenti fisici o wireless; mode e idee si diffondono sulle reti sociali, dove i nodi sono esseri umani e i link rappresentano diverse relazioni sociali.} La grande scoperta della network science è che, nonostante l'evidente diversità dei sistemi complessi, la struttura e l'evoluzione delle reti sottostanti a ciascun sistema sono guidate da un insieme comune di leggi e principi fondamentali. Pertanto, nonostante le sorprendenti differenze in termini di forma, dimensione, natura e scopo delle reti reali, la maggior parte di esse è governata da principi organizzativi comuni. Una volta astratta la natura dei componenti e la specifica tipologia delle interazioni tra di essi, le reti risultanti appaiono più simili che differenti tra loro \cite[Sez. 1.2-1.3]{barabasi2016network}. \ext{ Di conseguenza, possiamo utilizzare un insieme comune di strumenti matematici per esplorare questi sistemi.} 
+Negli ultimi decenni, lo studio dei sistemi complessi ha subito una profonda accelerazione grazie allo sviluppo della \emph{Network Science}, un framework teorico che permette di descrivere sistemi apparentemente disparati, dalle reti metaboliche nella cellula, alle infrastrutture tecnologiche come Internet, fino alle reti sociali, attraverso un linguaggio matematico unificato \cite[Cap. 1]{barabasi2016network}.
+Una delle questioni centrali in questo ambito riguarda l'emergere spontaneo di proprietà macroscopiche a partire da interazioni locali disordinate. In particolare, è fondamentale comprendere i meccanismi che garantiscono la connettività globale del sistema e, di riflesso, la sua \textbf{robustezza} a fronte di fallimenti casuali dei componenti (\emph{random failures}).
 
-La Network Science si pone l'obiettivo di costruire modelli in grado di riprodurre le proprietà delle reti reali.
-Dal punto di vista della modellistica, una rete è un oggetto relativamente semplice, costituito soltanto da nodi e link. La vera sfida, tuttavia, risiede nel decidere come posizionare i link tra i nodi affinché si possa riprodurre la complessità di un sistema reale. Tuttavia, la maggior parte delle reti osservabili non possiede una struttura regolare evidente; al contrario, a una prima analisi esse appaiono come se si fossero organizzate in modo casuale.
-A tal proposito, la filosofia alla base dei Random Network è semplice: si assume che questo obiettivo venga raggiunto al meglio distribuendo i link tra i nodi in modo puramente casuale . Il modello di Random Network più ampiamente studiato è il modello di Erdős-Rényi-Gilbert, che approfondiremo nelle sezioni successive \cite[Sez. 3.2]{barabasi2016network}.
+Il presente elaborato si propone di analizzare la stabilità strutturale delle reti attraverso lo studio della \emph{teoria della percolazione}, applicata al modello di grafi casuali di Erdős-Rényi $G(N, p)$.
+Come discussoda Newman \cite[Cap. 16]{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto da isole disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che abbraccia l'intero sistema.
+
+Sebbene le reti reali presentino spesso correlazioni topologiche complesse (come la proprietà \emph{scale-free}), il modello di Erdős-Rényi-Gilbert costituisce il "modello nullo" di riferimento, analogo al gas ideale in termodinamica. In questo modello, la probabilità di connessione tra i nodi è uniforme e indipendente, permettendo di trattare la transizione di fase in approssimazione di campo medio (\emph{Mean Field}).
+L'analisi di questo sistema possiede una forte valenza fisica: la soglia critica di percolazione identifica il punto esatto di rottura del sistema. Sotto questa soglia, la rete perde la sua funzionalità globale; sopra di essa, emerge l'ordine a lungo raggio.
+
+\subsection{Obiettivi del lavoro}
+Lo scopo centrale di questo elaborato è lo studio della \emph{teoria della percolazione} come chiave di lettura fondamentale per comprendere le transizioni di fase topologiche nelle reti complesse.
+Utilizzando il modello di Erdős-Rényi-Gilbert come sistema di riferimento, il lavoro si prefigge i seguenti obiettivi:
+
+\begin{itemize}
+    \item \textbf{Analisi della soglia di percolazione:} Derivare analiticamente, mediante il formalismo delle funzioni generatrici \cite[Cap. 12]{newman2018networks}, la condizione critica $\langle k \rangle_c = 1$. Questo valore segna l'emersione del \emph{cluster di percolazione} (o componente gigante), corrispondente alla rottura di simmetria del sistema e alla nascita dell'ordine a lungo raggio.
+
+    \item \textbf{Caratterizzazione dei fenomeni critici:} Studiare il comportamento della \emph{suscettività topologica} ($\chi$), intesa come la dimensione media dei cluster finiti. Attraverso simulazioni numeriche, si intende verificare la divergenza di $\chi$ in prossimità della soglia critica, evidenziando la natura continua (del secondo ordine) della transizione, in analogia con i sistemi termodinamici vicino al punto critico.
+
+    \item \textbf{Implicazioni sulla robustezza:} Interpretare fisicamente la transizione di percolazione nel contesto della stabilità strutturale. Si discuterà come la scomparsa del cluster di percolazione (per $\langle k \rangle < 1$) corrisponda al punto di collasso funzionale (\emph{failure}) della rete, collegando così la meccanica statistica della percolazione al concetto di robustezza descritto da Barabási \cite[Cap. 8]{barabasi2016network}.
+\end{itemize}
 
 \section{Elementi di teoria dei grafi}
-\section{Modello di Erdős-Rényi-Gilbert}
+Prima di addentrarci nell'analisi del modello di Erdős-Rényi-Gilbert, è necessario introdurre alcuni concetti fondamentali della teoria dei grafi \cite[Sez. 2.3, 2.10]{barabasi2016network}. Un grafo $G$ è costituito da un insieme di nodi e un insieme di link che connettono coppie di nodi, rappresentando un'interazione tra di essi. La dimensione del grafo è data dal numero di nodi $N$, mentre la connettività è data dal numero totale di link $L$.
+Una proprietà fondamentale di ciascun nodo è il suo grado $k$, che rappresenta il numero di link che esso possiede verso altri nodi.
+In un grafo non orientato, il numero totale di link $L$, può essere espresso come \ext{la somma dei gradi dei nodi divisa per 2, poiché ogni link viene contato due volte (una volta per ciascuno dei due nodi che collega)}:
+\begin{equation}
+    L = \frac{1}{2} \sum_{i=1}^{N} k_i
+\end{equation}
+dove $k_i$ è il grado del nodo $i$. Il grado medio $\langle k \rangle$ è dato da:
+\begin{equation}
+    \langle k \rangle = \frac{1}{N} \sum_{i=1}^{N} k_i = \frac{2L}{N}
+\end{equation}
+La distribuzione dei gradi, $P(k)$, fornisce la probabilità che un nodo scelto casualmente nella rete abbia grado $k$. Poiché $P(k)$ è una probabilità, deve essere normalizzata, cioè:
+\begin{equation}
+    \sum_{k=1}^{\infty} P(k) = 1
+\end{equation}
+Per una rete con $N$ nodi, la distribuzione dei gradi è data da:
+\begin{equation}
+    P(k) = \frac{N_k}{N}
+\end{equation}
+dove $N_k$ è il numero di nodi di grado $k$.
+
+Il coefficiente di clustering descrive il grado con cui i vicini di un dato nodo sono collegati tra loro. Per un nodo $i$ con grado $k_i$, il coefficiente di clustering locale è definito come:
+\begin{equation}
+    C_i = \frac{2 L_i}{k_i (k_i - 1)}
+\end{equation}
+dove $L_i$ rappresenta il numero di link tra i $k_i$ vicini del nodo $i$. Si noti che $C_i$ è compreso tra 0 e 1. \ext{Dunque,
+$C_i$ misura la densità locale dei link nel network: più densamente interconnesso è il "vicinato" del nodo $i$, maggiore è il suo coefficiente di clustering locale.}
+Il grado di clustering di un intero network è catturato dal coefficiente di clustering medio $\langle C \rangle$,definito come:
+\begin{equation}
+    \langle C \rangle = \frac{1}{N} \sum_{i=1}^{N} C_i
+\end{equation}
+In linea con l'interpretazione probabilistica, 〈C〉 è la probabilità che due vicini di un nodo scelto casualmente siano collegati tra loro.
+
+\section{Percolazione nel Modello di Erdős-Rényi-Gilbert}
 \section{Simulazione e risultati}
 \section{Conclusioni}
 
