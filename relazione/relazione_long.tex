@@ -6,9 +6,27 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{amsfonts}
-\usepackage{cleveref}
 \usepackage{booktabs}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+]{hyperref}
+\usepackage{cleveref}
+\usepackage{csquotes}
+\usepackage[style=phys, backend=biber, biblabel=brackets]{biblatex}
+
+\addbibresource{bibliografia.bib}
+\DeclareFieldFormat{postnote}{\textcolor{blue}{\mkpageprefix[pagination]{#1}}}
+\DeclareFieldFormat{multipostnote}{\textcolor{blue}
+{\mkpageprefix[pagination]{#1}}}
+\DeclareFieldFormat{cite}{\hyperref{\mkbibbrackets{#1}}}
+\renewcommand{\mkbibbrackets}[1]{\textcolor{blue}{[#1]}}
+
+\crefformat{equation}{#2(#1)#3}
+\crefformat{appendix}{#2(#1)#3}
 \graphicspath{{./images/}}
 
 \newcommand{\err}[1]{\textcolor{red}{#1}}
@@ -25,16 +43,18 @@
 \renewcommand{\abstractname}{Abstract}
 
 \section{Introduzione}
+\err{SISTEMA}
 Negli ultimi decenni, lo studio dei sistemi complessi ha subito una profonda accelerazione grazie allo sviluppo della \emph{Network Science}, un framework teorico che permette di descrivere sistemi apparentemente disparati, dalle reti metaboliche nella cellula, alle infrastrutture tecnologiche come Internet, fino alle reti sociali, attraverso un linguaggio matematico unificato \cite[Cap. 1]{barabasi2016network}.
 Una delle questioni centrali in questo ambito riguarda l'emergere spontaneo di proprietà macroscopiche a partire da interazioni locali disordinate. In particolare, è fondamentale comprendere i meccanismi che garantiscono la connettività globale del sistema e, di riflesso, la sua \textbf{robustezza} a fronte di fallimenti casuali dei componenti (\emph{random failures}).
 
 Il presente elaborato si propone di analizzare la stabilità strutturale delle reti attraverso lo studio della \emph{teoria della percolazione}, applicata al modello di grafi casuali di Erdős-Rényi $G(N, p)$.
-Come discussoda Newman \cite[Cap. 16]{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto da isole disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che abbraccia l'intero sistema.
+Come discusso da Newman \cite[Cap. 16]{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto da isole disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che abbraccia l'intero sistema.
 
 Sebbene le reti reali presentino spesso correlazioni topologiche complesse (come la proprietà \emph{scale-free}), il modello di Erdős-Rényi-Gilbert costituisce il "modello nullo" di riferimento, analogo al gas ideale in termodinamica. In questo modello, la probabilità di connessione tra i nodi è uniforme e indipendente, permettendo di trattare la transizione di fase in approssimazione di campo medio (\emph{Mean Field}).
 L'analisi di questo sistema possiede una forte valenza fisica: la soglia critica di percolazione identifica il punto esatto di rottura del sistema. Sotto questa soglia, la rete perde la sua funzionalità globale; sopra di essa, emerge l'ordine a lungo raggio.
 
 \subsection{Obiettivi del lavoro}
+\err{SISTEMA}
 Lo scopo centrale di questo elaborato è lo studio della \emph{teoria della percolazione} come chiave di lettura fondamentale per comprendere le transizioni di fase topologiche nelle reti complesse.
 Utilizzando il modello di Erdős-Rényi-Gilbert come sistema di riferimento, il lavoro si prefigge i seguenti obiettivi:
 
@@ -56,6 +76,7 @@ In un grafo non orientato, il numero totale di link $L$, può essere espresso co
 dove $k_i$ è il grado del nodo $i$. Il grado medio $\langle k \rangle$ è dato da:
 \begin{equation}
     \langle k \rangle = \frac{1}{N} \sum_{i=1}^{N} k_i = \frac{2L}{N}
+    \label{eq:grado_medio}
 \end{equation}
 La distribuzione dei gradi, $P(k)$, fornisce la probabilità che un nodo scelto casualmente nella rete abbia grado $k$. Poiché $P(k)$ è una probabilità, deve essere normalizzata, cioè:
 \begin{equation}
@@ -72,7 +93,7 @@ Il coefficiente di clustering descrive il grado con cui i vicini di un dato nodo
     C_i = \frac{2 L_i}{k_i (k_i - 1)}
 \end{equation}
 dove $L_i$ rappresenta il numero di link tra i $k_i$ vicini del nodo $i$. Si noti che $C_i$ è compreso tra 0 e 1. \ext{Dunque,
-$C_i$ misura la densità locale dei link nel network: più densamente interconnesso è il "vicinato" del nodo $i$, maggiore è il suo coefficiente di clustering locale.}
+    $C_i$ misura la densità locale dei link nel network: più densamente interconnesso è il "vicinato" del nodo $i$, maggiore è il suo coefficiente di clustering locale.}
 Il grado di clustering di un intero network è catturato dal coefficiente di clustering medio $\langle C \rangle$,definito come:
 \begin{equation}
     \langle C \rangle = \frac{1}{N} \sum_{i=1}^{N} C_i
@@ -80,11 +101,80 @@ Il grado di clustering di un intero network è catturato dal coefficiente di clu
 In linea con l'interpretazione probabilistica, 〈C〉 è la probabilità che due vicini di un nodo scelto casualmente siano collegati tra loro.
 
 \section{Percolazione nel Modello di Erdős-Rényi-Gilbert}
+Il modello di Erdős-Rényi-Gilbert, denotato come $G(N, p)$, è un modello di grafo casuale in cui ogni coppia di $N$ nodi è connessa da un link con probabilità $p$.
+In questo modello, il numero totale di link $L$ è una variabile casuale che segue una distribuzione binomiale
+\begin{equation}
+    P(L) = \binom{\binom{N}{2}}{L} p^L (1-p)^{\binom{N}{2} - L}
+\end{equation}
+con media
+\begin{equation}
+    \langle L \rangle = p \binom{N}{2}
+\end{equation}
+Di conseguenza, utilizzando \cref{eq:grado_medio} il grado medio $\langle k \rangle$ è dato da
+\begin{equation}
+    \langle k \rangle = \frac{2 \langle L \rangle}{N} = p (N - 1)
+\end{equation}
+Anche la distribuzione dei gradi $P(k)$ risulta essere binomiale:
+\begin{equation}
+    P(k) = \binom{N-1}{k} p^k (1-p)^{N-1-k}
+\end{equation}
+In molti casi siamo interessati a grandi network con grado medio finito $\langle k \rangle$ indipendente dalla dimensione $N$. In questo limite, ovvero $ \langle k \rangle \ll N $, la distribuzione dei gradi si approssima a una distribuzione di Poisson:
+\begin{equation}
+    P(k) = \frac{\langle k \rangle^k e^{-\langle k \rangle}}{k!}
+\end{equation}
+\err{SISTEMA}
+Consideriamo il caso in cui $p = 0$: non vi sono archi nella rete ed essa è completamente sconnessa.  Ogni vertice è un'isola a sé stante; la rete possiede $N$ componenti separate costituite esattamente da un singolo vertice ciascuna. Nel limite opposto, quando $p = 1$, ogni vertice è connesso direttamente a tutti gli altri.  In questo caso, tutti i vertici sono connessi tra loro in un'unica componente che copre l'intera rete. Concentriamoci ora sulla dimensione della componente più grande della rete in ciascuno di questi casi. Nel primo caso ($p = 0$) la componente più grande ha dimensione 1. Nel secondo ($p = 1$) la componente più grande ha dimensione $N$.Nel primo caso, la dimensione della componente più grande è indipendente dal numero di vertici $N$ della rete; nel secondo è proporzionale a $N$, ovvero è estensiva. \ext{ In molte applicazioni delle reti è cruciale che esista una componente che riempia la gran parte della rete. Per esempio, nel caso di Internet, è importante che vi sia un cammino attraverso la rete che colleghi la maggior parte dei computer alla maggior parte degli altri. Se così non fosse, la rete non sarebbe in grado di svolgere la sua funzione prevista di garantire le comunicazioni computer-computer per i suoi utenti}. Una domanda interessante da porsi è come avvenga la transizione tra questi due estremi se costruiamo grafi casuali con valori di $p$ gradualmente crescenti, partendo da 0 e finendo a 1. Potremmo intuire, per esempio, che la dimensione della componente più grande aumenti in qualche modo gradualmente con $p$, diventando estensiva solo nel limite in cui $p = 1$. In realtà, tuttavia, accade qualcosa di molto più interessante. Come vedremo, la dimensione della componente più grande subisce un cambiamento improvviso, o transizione di fase, da dimensione costante a dimensione estensiva in corrispondenza di un particolare valore speciale di $p$.  Diamo un'occhiata a questa transizione. Una componente della rete la cui dimensione cresce proporzionalmente a $n$ è chiamata componente gigante. La dimensione della componente gigante $S$, definita come la frazione di nodi che vi appartengono, nel limite di Poisson è data dall'equazione trascendente:
+\begin{equation}  
+      \quad \boxed{S = 1 - e^{-\langle k \rangle S}}
+\end{equation}
+e il punto critico di percolazione, ovvero il punto in cui la componente gigante emerge, è dato da
+\begin{equation}
+    \langle k \rangle_c = 1
+\end{equation}
+come ricavato in \cref{sec:GC}.
+
+
 \section{Simulazione e risultati}
 \section{Conclusioni}
+\appendix
+\section{Appendici}
+\subsection{Componente Gigante}\label{sec:GC}
+Sia $u$ la frazione di nodi che non appartengono alla componente gigante (GC) e $S$ la frazione di nodi che vi appartengono. Vale la relazione:
+\begin{equation}
+    u = 1 - S
+\end{equation}
+Un nodo $i$ non appartiene alla GC se, per ogni altro nodo $j$, o non esiste un arco ($1-p$) oppure esiste un arco ma $j$ non è nella GC ($pu$). La probabilità totale per un singolo nodo $j$ è
+   $1 - p + pu$.
+Considerando tutti gli $N-1$ possibili vicini, la probabilità che $i$ non sia connesso alla GC è:
+\begin{equation}
+    u = (1 - p + pu)^{N-1}
+\end{equation}
+Sostituendo la probabilità di connessione $p = \frac{\langle k \rangle}{N-1}$, passando ai logaritmi e utilizzando l'approssimazione $\ln(1+x) \approx x$ per $x \ll 1$, otteniamo:
+\begin{equation}
+\ln u = -\langle k \rangle (1-u)
+\end{equation}
+Esponenziando entrambi i membri otteniamo un'equazione trascendente per $u$:
+\begin{equation}
+    u = e^{-\langle k \rangle (1-u)}
+\end{equation}
+Sostituendo $u = 1 - S$, otteniamo l'equazione finale per la dimensione della GC:
+\begin{equation}
+    S = 1 - e^{-\langle k \rangle S}
+    \label{eq:giant_comp}
+\end{equation}
+Per trovare il punto critico, cerchiamo quando la derivata del membro di destra rispetto a $S$ valutata in $S=0$ supera la pendenza della retta $y=S$ (che è 1):
+\begin{equation}
+    \left. \frac{d}{dS} (1 - e^{-\langle k \rangle S}) \right|_{S=0} = 1
+\end{equation}
+\begin{equation}
+    \left. \langle k \rangle e^{-\langle k \rangle S} \right|_{S=0} = 1 \quad
+\end{equation}
+La transizione di fase avviene dunque a:
+\begin{equation}
+    \langle k \rangle_c = 1
+\end{equation}
 
-\bibliographystyle{plain}
-\bibliography{bibliografia}
+\printbibliography[heading=bibintoc, title={Bibliografia}]
 
 \err{AGGIUSTA BIBLIO (pagine si/no?), ecc}
 
