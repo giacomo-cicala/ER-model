@@ -100,7 +100,7 @@ Il grado di clustering di un intero network è catturato dal coefficiente di clu
 \end{equation}
 In linea con l'interpretazione probabilistica, 〈C〉 è la probabilità che due vicini di un nodo scelto casualmente siano collegati tra loro.
 
-\section{Percolazione nel Modello di Erdős-Rényi-Gilbert}
+\section{Percolazione nel modello di Erdős-Rényi-Gilbert}
 Il modello di Erdős-Rényi-Gilbert, denotato come $G(N, p)$, è un modello di grafo casuale in cui ogni coppia di $N$ nodi è connessa da un link con probabilità $p$.
 In questo modello, il numero totale di link $L$ è una variabile casuale che segue una distribuzione binomiale
 \begin{equation}
@@ -123,7 +123,7 @@ In molti casi siamo interessati a grandi network con grado medio finito $\langle
     P(k) = \frac{\langle k \rangle^k e^{-\langle k \rangle}}{k!}
 \end{equation}
 \err{SISTEMA}
-Consideriamo il caso in cui $p = 0$: non vi sono archi nella rete ed essa è completamente sconnessa.  Ogni vertice è un'isola a sé stante; la rete possiede $N$ componenti separate costituite esattamente da un singolo vertice ciascuna. Nel limite opposto, quando $p = 1$, ogni vertice è connesso direttamente a tutti gli altri.  In questo caso, tutti i vertici sono connessi tra loro in un'unica componente che copre l'intera rete. Concentriamoci ora sulla dimensione della componente più grande della rete in ciascuno di questi casi. Nel primo caso ($p = 0$) la componente più grande ha dimensione 1. Nel secondo ($p = 1$) la componente più grande ha dimensione $N$.Nel primo caso, la dimensione della componente più grande è indipendente dal numero di vertici $N$ della rete; nel secondo è proporzionale a $N$, ovvero è estensiva. \ext{ In molte applicazioni delle reti è cruciale che esista una componente che riempia la gran parte della rete. Per esempio, nel caso di Internet, è importante che vi sia un cammino attraverso la rete che colleghi la maggior parte dei computer alla maggior parte degli altri. Se così non fosse, la rete non sarebbe in grado di svolgere la sua funzione prevista di garantire le comunicazioni computer-computer per i suoi utenti}. Una domanda interessante da porsi è come avvenga la transizione tra questi due estremi se costruiamo grafi casuali con valori di $p$ gradualmente crescenti, partendo da 0 e finendo a 1. Potremmo intuire, per esempio, che la dimensione della componente più grande aumenti in qualche modo gradualmente con $p$, diventando estensiva solo nel limite in cui $p = 1$. In realtà, tuttavia, accade qualcosa di molto più interessante. Come vedremo, la dimensione della componente più grande subisce un cambiamento improvviso, o transizione di fase, da dimensione costante a dimensione estensiva in corrispondenza di un particolare valore speciale di $p$.  Diamo un'occhiata a questa transizione. Una componente della rete la cui dimensione cresce proporzionalmente a $n$ è chiamata componente gigante. La dimensione della componente gigante $S$, definita come la frazione di nodi che vi appartengono, nel limite di Poisson è data dall'equazione trascendente:
+Consideriamo il caso in cui $p = 0$: non vi sono link nella rete ed essa è completamente sconnessa. \ext{ Ogni vertice è un'isola a sé stante; la rete possiede $N$ componenti separate costituite esattamente da un singolo vertice ciascuna}. Nel limite opposto, quando $p = 1$, ogni vertice è connesso direttamente a tutti gli altri, creando un'unica componente che copre l'intera rete. Concentriamoci ora sulla dimensione della componente più grande della rete in ciascuno di questi casi. Nel primo caso ($p = 0$) la componente più grande ha dimensione 1. Nel secondo ($p = 1$) la componente più grande ha dimensione $N$. Nel primo caso, la dimensione della componente più grande è indipendente dal numero di vertici $N$ della rete; nel secondo è proporzionale a $N$, ovvero è estensiva. \ext{ In molte applicazioni delle reti è cruciale che esista una componente che riempia la gran parte della rete. Per esempio, nel caso di Internet, è importante che vi sia un cammino attraverso la rete che colleghi la maggior parte dei computer alla maggior parte degli altri. Se così non fosse, la rete non sarebbe in grado di svolgere la sua funzione prevista di garantire le comunicazioni computer-computer per i suoi utenti}. Una domanda interessante da porsi è come avvenga la transizione tra questi due estremi se costruiamo grafi casuali con valori di $p$ gradualmente crescenti, partendo da 0 e finendo a 1. Potremmo intuire, per esempio, che la dimensione della componente più grande aumenti in qualche modo gradualmente con $p$, diventando estensiva solo nel limite in cui $p = 1$. In realtà, accade qualcosa di molto più interessante. Come vedremo, la dimensione della componente più grande subisce un cambiamento improvviso, o transizione di fase, da dimensione costante a dimensione estensiva in corrispondenza di un particolare valore speciale di $p$. Una componente della rete la cui dimensione cresce proporzionalmente a $n$ è chiamata componente gigante. La dimensione della componente gigante $S$, definita come la frazione di nodi che vi appartengono, nel limite di Poisson è data dall'equazione trascendente:
 \begin{equation}  
       \quad \boxed{S = 1 - e^{-\langle k \rangle S}}
 \end{equation}
@@ -131,9 +131,10 @@ e il punto critico di percolazione, ovvero il punto in cui la componente gigante
 \begin{equation}
     \langle k \rangle_c = 1
 \end{equation}
-come ricavato in \cref{sec:GC}.
+come ricavato in \cref{sec:GC}. \err{Mettere grafico S-K teorico?}
 
-
+\subsection{Regimi, in particolare quello compl. connesso}
+\subsection{Transizione di fase e percolazione}
 \section{Simulazione e risultati}
 \section{Conclusioni}
 \appendix
