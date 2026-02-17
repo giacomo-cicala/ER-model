@@ -134,6 +134,28 @@ e il punto critico di percolazione, ovvero il punto in cui la componente gigante
 come ricavato in \cref{sec:GC}. \err{Mettere grafico S-K teorico?}
 
 \subsection{Regimi, in particolare quello compl. connesso}
+Possiamo distinguere quattro regimi topologici distinti \cite[Cap. 3.6]{barabasi2016network}:
+\begin{itemize}
+    \item \textbf{Regime subcritico ($\langle k \rangle < 1$):} In questo regime, la rete è composta da numerosi cluster finiti di dimensione limitata. La dimensione massima dei cluster cresce al massimo come $\log N$, e non esiste una componente gigante. La rete è frammentata e non connessa.
+
+    \item \textbf{Punto critico ($\langle k \rangle = 1$):} In questo punto, la rete subisce una transizione di fase. La dimensione massima dei cluster cresce come $N^{2/3}$, e la suscettività topologica diverge. La rete è ancora frammentata, ma si avvicina alla formazione di una componente gigante.
+
+    \item \textbf{Regime supercritico ($\langle k \rangle > 1$):} In questo regime, emerge una componente gigante che contiene una frazione finita $S$ dei nodi. I cluster finiti rimanenti hanno dimensione limitata. La rete è connessa a livello macroscopico.
+
+    \item \textbf{Regime completamente connesso ($\langle k \rangle > \ln N$):} In questo regime, il numero di aspettazione di nodi isolati è inferiore a 1 \cref{sec:connected_regime}, e la rete è quasi sicuramente completamente connessa.
+\end{itemize}
+\subsection{Componenti piccole e suscettività}
+Nel regime subcritico, la dimensione media delle componenti piccole $ \langle s \rangle$, è data da \cref{sec:small_components}:
+\begin{equation}
+    \langle s \rangle = \frac{\sum_{s} s^2 N_s}{\sum_{s} s N_s}
+\end{equation}
+dove $N_s$ è il numero di cluster di dimensione $s$. Si può dimostrare che $\langle s \rangle$ diverge al punto critico come \cite[Cap. 12.6]{newman2018networks}:
+\begin{equation}
+    \langle s \rangle \sim \frac{1}{|1 - \langle k \rangle|} 
+\end{equation}
+indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. \ext{Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica.}
+
+
 \subsection{Transizione di fase e percolazione}
 \section{Simulazione e risultati}
 \section{Conclusioni}
@@ -173,6 +195,28 @@ Per trovare il punto critico, cerchiamo quando la derivata del membro di destra 
 La transizione di fase avviene dunque a:
 \begin{equation}
     \langle k \rangle_c = 1
+\end{equation}
+\subsection{Regime completamente connesso}\label{sec:connected_regime}
+Cerchiamo il valore di $\langle k \rangle$ affinché la rete diventi completamente connessa.
+La probabilità che un nodo scelto a caso non abbia link verso la componente gigante è $(1-p)^N$.
+Sfruttando l'approssimazione $(1-x/n)^n \approx e^{-x}$, il numero atteso di nodi isolati $I_N$ è:
+\begin{equation}
+    I_N = N(1-p)^N \approx N e^{-pN} = N e^{-\langle k \rangle}
+\end{equation}
+La condizione di connettività completa si raggiunge quando rimane al massimo un solo nodo isolato nel sistema ($I_N = 1$). Risolvendo l'equazione:
+\begin{equation}
+1 = N e^{-\langle k \rangle} \quad \Longrightarrow \quad \langle k \rangle = \ln N
+\end{equation}
+
+\subsection{Dimensione media delle componenti piccole} \label{sec:small_components}
+Sia $N_s$ il numero di cluster di dimensione $s$ presenti nella rete. La probabilità $\pi_s$ che un nodo scelto a caso appartenga a un cluster di dimensione $s$ è:
+\begin{equation}
+    \pi_s = \frac{\text{nodi in cluster di taglia } s}{\text{nodi totali}} = \frac{s \cdot N_s}{\sum_{k} k \cdot N_k}
+\end{equation}
+La dimensione media $\langle s \rangle_{w}$ è quindi il valore atteso della dimensione calcolato su questa distribuzione di probabilità:
+
+\begin{equation}
+    \chi = \sum_{s} s \cdot \pi_s = \sum_{s} s \cdot \left( \frac{s N_s}{\sum_{k} k N_k} \right) = \frac{\sum_{s} s^2 N_s}{\sum_{s} s N_s}
 \end{equation}
 
 \printbibliography[heading=bibintoc, title={Bibliografia}]
