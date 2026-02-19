@@ -122,7 +122,7 @@ e il punto critico di percolazione, ovvero il punto in cui la componente gigante
 \begin{equation}
     \langle k \rangle_c = 1
 \end{equation}
-come ricavato in \cref{sec:GC}. \err{Mettere grafico S-K teorico?}
+come ricavato in \cref{sec:GC}.
 
 \subsection{Regimi ELIMINARE?}
 \ext{
@@ -157,23 +157,37 @@ Quindi, vicino al punto critico, il parametro d'ordine cresce linearmente con $\
 \begin{equation}
     S \sim (\langle k \rangle - 1)^1 \quad \text{per } \langle k \rangle \to 1^+
 \end{equation}
+ \err{Mettere grafico S-K teorico con considerazioni?}
 
-Nel regime subcritico, la dimensione media delle componenti piccole $ \langle s \rangle$, è data da \cref{sec:small_components}:
+Invece, per quanto riguarda la suscettività, nel regime subcritico la dimensione media delle componenti piccole $ \langle s \rangle$, è data da \cref{sec:small_components}:
 \begin{equation}
     \langle s \rangle = \frac{\sum_{s} s^2 N_s}{\sum_{s} s N_s}
 \end{equation}
-dove $N_s$ è il numero di cluster di dimensione $s$. Si può dimostrare che $\langle s \rangle$ diverge al punto critico come \cite[Cap. 12.6]{newman2018networks}:
+dove $N_s$ è il numero di cluster di dimensione $s$. Si può dimostrare che $\langle s \rangle$ diverge al punto critico con un esponente critico $\gamma = 1$ \cite[Cap. 12.6]{newman2018networks}:
 \begin{equation}
     \langle s \rangle \sim \frac{1}{|1 - \langle k \rangle|} 
 \end{equation}
-indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica.
+indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica. Inoltre, la divergenza di $\langle s \rangle$ al punto critico riflette l'emergere di cluster di tutte le dimensioni secondo una legge a potenza indicando così un'esplosione delle fluttuazioni, caratteristica universale delle transizioni di fase continue.
+
 \err{Mettere grafico divergenza suscettività?}
 
 \section{Percolazione inversa e robustezza}
+Una delle caratteristiche di maggiore interesse per un network è la sua \textbf{robustezza}, ovvero la capacità di mantenere la connettività globale nonostante la rimozione di nodi o link. La teoria della percolazione fornisce un quadro teorico per analizzare questo aspetto attraverso il concetto di \emph{percolazione inversa}, in cui si rimuovono nodi o link in modo casuale o mirato, e si studia come ciò influenzi la dimensione della componente gigante.
 
-\err{3 quantità caratteristiche, percolazione e robustezza}
+Analizziamo il caso della rimozione casuale di una frazione $f$ di nodi. Utilizzando il criterio di Molloy-Reed \err{REF?}:
+\begin{equation}
+    \frac{\langle k^2 \rangle}{\langle k \rangle} > 2
+\end{equation}
+il quale mi determina la condizione necessaria affinchè esista una componente gigante per un generico network con distribuzione dei gradi $P(k)$, è possibile derivare la soglia critica di percolazione $f_c$ \err{REF?}:
+\begin{equation}
+    f_c = 1 - \frac{1}{\frac{\langle k^2 \rangle}{\langle k \rangle} - 1}
+\end{equation}
+oltre la quale la rete collassa e perde la componente gigante. Nel caso del modello di Erdős-Rényi-Gilbert, dove $\langle k^2 \rangle = \langle k \rangle^2 + \langle k \rangle$ \err{REF?}, la soglia critica di percolazione è:
+\begin{equation}
+    f_c = 1 - \frac{1}{\langle k \rangle}
+\end{equation}
+Questo risultato mostra che la robustezza di questo network dipende unicamente dal grado medio $\langle k \rangle$: reti con grado medio più elevato sono più robuste alla rimozione casuale di nodi, poiché la soglia critica $f_c$ è più alta. Tuttavia, è sufficiente rimuovere una frazione $f_c < f < 1$ di nodi per far collassare la rete, evidenziando la vulnerabilità intrinseca del modello di Erdős-Rényi-Gilbert a fallimenti casuali. \ext{Questo comportamento è in contrasto con reti con distribuzioni dei gradi più eterogenee (come le reti scale-free), che possono essere molto più robuste a fallimenti casuali ma estremamente vulnerabili a attacchi mirati contro i nodi più connessi \cite[Cap. 8]{barabasi2016network}}.
 
-\err{percolazione inversa, Molly Reed e  treshold di percolazione}
 \section{Simulazione e risultati}
 \section{Conclusioni}
 \appendix
