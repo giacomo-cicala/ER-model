@@ -87,20 +87,7 @@ Per una rete con $N$ nodi, la distribuzione dei gradi è data da:
     P(k) = \frac{N_k}{N}
 \end{equation}
 dove $N_k$ è il numero di nodi di grado $k$.
-
-Il coefficiente di clustering descrive il grado con cui i vicini di un dato nodo sono collegati tra loro. Per un nodo $i$ con grado $k_i$, il coefficiente di clustering locale è definito come:
-\begin{equation}
-    C_i = \frac{2 L_i}{k_i (k_i - 1)}
-\end{equation}
-dove $L_i$ rappresenta il numero di link tra i $k_i$ vicini del nodo $i$. Si noti che $C_i$ è compreso tra 0 e 1. \ext{Dunque,
-    $C_i$ misura la densità locale dei link nel network: più densamente interconnesso è il "vicinato" del nodo $i$, maggiore è il suo coefficiente di clustering locale.}
-Il grado di clustering di un intero network è catturato dal coefficiente di clustering medio $\langle C \rangle$,definito come:
-\begin{equation}
-    \langle C \rangle = \frac{1}{N} \sum_{i=1}^{N} C_i
-\end{equation}
-In linea con l'interpretazione probabilistica, 〈C〉 è la probabilità che due vicini di un nodo scelto casualmente siano collegati tra loro.
-
-\section{Percolazione nel modello di Erdős-Rényi-Gilbert}
+\section{Modello di Erdős-Rényi-Gilbert}
 Il modello di Erdős-Rényi-Gilbert, denotato come $G(N, p)$, è un modello di grafo casuale in cui ogni coppia di $N$ nodi è connessa da un link con probabilità $p$.
 In questo modello, il numero totale di link $L$ è una variabile casuale che segue una distribuzione binomiale
 \begin{equation}
@@ -122,10 +109,14 @@ In molti casi siamo interessati a grandi network con grado medio finito $\langle
 \begin{equation}
     P(k) = \frac{\langle k \rangle^k e^{-\langle k \rangle}}{k!}
 \end{equation}
+
+\section{Transizione di fase di percolazione}
+\subsection{Emergenza della componente gigante}
 \err{SISTEMA}
 Consideriamo il caso in cui $p = 0$: non vi sono link nella rete ed essa è completamente sconnessa. \ext{ Ogni vertice è un'isola a sé stante; la rete possiede $N$ componenti separate costituite esattamente da un singolo vertice ciascuna}. Nel limite opposto, quando $p = 1$, ogni vertice è connesso direttamente a tutti gli altri, creando un'unica componente che copre l'intera rete. Concentriamoci ora sulla dimensione della componente più grande della rete in ciascuno di questi casi. Nel primo caso ($p = 0$) la componente più grande ha dimensione 1. Nel secondo ($p = 1$) la componente più grande ha dimensione $N$. Nel primo caso, la dimensione della componente più grande è indipendente dal numero di vertici $N$ della rete; nel secondo è proporzionale a $N$, ovvero è estensiva. \ext{ In molte applicazioni delle reti è cruciale che esista una componente che riempia la gran parte della rete. Per esempio, nel caso di Internet, è importante che vi sia un cammino attraverso la rete che colleghi la maggior parte dei computer alla maggior parte degli altri. Se così non fosse, la rete non sarebbe in grado di svolgere la sua funzione prevista di garantire le comunicazioni computer-computer per i suoi utenti}. Una domanda interessante da porsi è come avvenga la transizione tra questi due estremi se costruiamo grafi casuali con valori di $p$ gradualmente crescenti, partendo da 0 e finendo a 1. Potremmo intuire, per esempio, che la dimensione della componente più grande aumenti in qualche modo gradualmente con $p$, diventando estensiva solo nel limite in cui $p = 1$. In realtà, accade qualcosa di molto più interessante. Come vedremo, la dimensione della componente più grande subisce un cambiamento improvviso, o transizione di fase, da dimensione costante a dimensione estensiva in corrispondenza di un particolare valore speciale di $p$. Una componente della rete la cui dimensione cresce proporzionalmente a $n$ è chiamata componente gigante. La dimensione della componente gigante $S$, definita come la frazione di nodi che vi appartengono, nel limite di Poisson è data dall'equazione trascendente:
 \begin{equation}  
       \quad \boxed{S = 1 - e^{-\langle k \rangle S}}
+       \label{eq:giant_comp}
 \end{equation}
 e il punto critico di percolazione, ovvero il punto in cui la componente gigante emerge, è dato da
 \begin{equation}
@@ -133,8 +124,9 @@ e il punto critico di percolazione, ovvero il punto in cui la componente gigante
 \end{equation}
 come ricavato in \cref{sec:GC}. \err{Mettere grafico S-K teorico?}
 
-\subsection{Regimi, in particolare quello compl. connesso}
-Possiamo distinguere quattro regimi topologici distinti \cite[Cap. 3.6]{barabasi2016network}:
+\subsection{Regimi ELIMINARE?}
+\ext{
+Possiamo distinguere quattro regimi topologici distinti \cite[Cap. 3.6]{barabasi2016network}:}
 \begin{itemize}
     \item \textbf{Regime subcritico ($\langle k \rangle < 1$):} In questo regime, la rete è composta da numerosi cluster finiti di dimensione limitata. La dimensione massima dei cluster cresce al massimo come $\log N$, e non esiste una componente gigante. La rete è frammentata e non connessa.
 
@@ -144,7 +136,28 @@ Possiamo distinguere quattro regimi topologici distinti \cite[Cap. 3.6]{barabasi
 
     \item \textbf{Regime completamente connesso ($\langle k \rangle > \ln N$):} In questo regime, il numero di aspettazione di nodi isolati è inferiore a 1 \cref{sec:connected_regime}, e la rete è quasi sicuramente completamente connessa.
 \end{itemize}
-\subsection{Componenti piccole e suscettività}
+\subsection{Transizione di fase}
+Per quantificare la transizione di fase possiamo introduere due quantità fondamentali:
+\begin{itemize}
+    \item \textbf{Parametro d'ordine $P_\infty$:} Definito come la probabilità che un nodo appartenga alla componente gigante, coincide dunque con la frazione di nodi appartenenti alla componente gigante $S$. Questo parametro permette di distinguere una fase ordinata ($P_\infty > 0$) da una disordinata ($P_\infty = 0$). Per la teoria della percolazione si ha che \err{REF?}:
+\begin{equation}
+    S \sim (\langle k \rangle - \langle k \rangle_c)^\beta \quad \text{per } \langle k \rangle \to \langle k \rangle_c^+
+\end{equation}
+con  $\beta > 0$ esponente critico. \err{Ovvero la dimensione della componente gigante cresce in modo continuo partendo da $S=0$ al punto critico.}
+    \item \textbf{Suscettività $\chi$:} Definita come la dimensione media dei cluster piccoli $ \langle s \rangle$, rappresenta la sensibilità della rete a variazioni di $\langle k \rangle$. Per la teoria della percolazione si ha che \err{REF?}:
+\begin{equation}    \chi \sim |\langle k \rangle - \langle k \rangle_c|^{-\gamma} \quad \text{per } \langle k \rangle \to \langle k \rangle_c
+\end{equation}
+con $\gamma > 0$ esponente critico. Ovvero la dimensione media dei cluster piccoli diverge al punto critico.
+\end{itemize}
+Per quanto riguarda il parametro d'ordine, utilizzando \eqref{eq:giant_comp} possiamo espandere l'esponenziale in serie di Taylor al secondo ordine attorno a $\langle k \rangle_c = 1$ e ottenere \err{REF?}:
+\begin{equation}
+    S \approx 2(\langle k \rangle - 1)
+\end{equation}
+Quindi, vicino al punto critico, il parametro d'ordine cresce linearmente con $\langle k \rangle - 1$, indicando che l'esponente critico $\beta$ è pari a 1:
+\begin{equation}
+    S \sim (\langle k \rangle - 1)^1 \quad \text{per } \langle k \rangle \to 1^+
+\end{equation}
+
 Nel regime subcritico, la dimensione media delle componenti piccole $ \langle s \rangle$, è data da \cref{sec:small_components}:
 \begin{equation}
     \langle s \rangle = \frac{\sum_{s} s^2 N_s}{\sum_{s} s N_s}
@@ -156,8 +169,11 @@ dove $N_s$ è il numero di cluster di dimensione $s$. Si può dimostrare che $\l
 indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica.
 \err{Mettere grafico divergenza suscettività?}
 
+\section{Percolazione inversa e robustezza}
 
-\subsection{Transizione di fase e percolazione}
+\err{3 quantità caratteristiche, percolazione e robustezza}
+
+\err{percolazione inversa, Molly Reed e  treshold di percolazione}
 \section{Simulazione e risultati}
 \section{Conclusioni}
 \appendix
@@ -184,7 +200,6 @@ Esponenziando entrambi i membri otteniamo un'equazione trascendente per $u$:
 Sostituendo $u = 1 - S$, otteniamo l'equazione finale per la dimensione della GC:
 \begin{equation}
     S = 1 - e^{-\langle k \rangle S}
-    \label{eq:giant_comp}
 \end{equation}
 Per trovare il punto critico, cerchiamo quando la derivata del membro di destra rispetto a $S$ valutata in $S=0$ supera la pendenza della retta $y=S$ (che è 1):
 \begin{equation}
