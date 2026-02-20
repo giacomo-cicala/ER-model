@@ -18,20 +18,22 @@
 \usepackage{csquotes}
 \usepackage[style=phys, backend=biber, biblabel=brackets]{biblatex}
 
+\graphicspath{{./images/}}
 \addbibresource{bibliografia.bib}
+
 \DeclareFieldFormat{postnote}{\textcolor{blue}{\mkpageprefix[pagination]{#1}}}
 \DeclareFieldFormat{multipostnote}{\textcolor{blue}
 {\mkpageprefix[pagination]{#1}}}
 \DeclareFieldFormat{cite}{\hyperref{\mkbibbrackets{#1}}}
-\renewcommand{\mkbibbrackets}[1]{\textcolor{blue}{[#1]}}
 
 \crefformat{equation}{#2(#1)#3}
 \crefformat{appendix}{#2(#1)#3}
-\graphicspath{{./images/}}
+\crefname{table}{tab.}{tab.}
 
+\renewcommand{\mkbibbrackets}[1]{\textcolor{blue}{[#1]}}
 \newcommand{\err}[1]{\textcolor{red}{#1}}
 \newcommand{\ext}[1]{\textcolor{blue}{#1}}
-\crefname{table}{tab.}{tab.}
+
 
 \title{Percolazione e robustezza nelle reti complesse: analisi della transizione di fase nel modello Erdős-Rényi-Gilbert}
 \author{Giacomo Cicala}
@@ -114,9 +116,9 @@ In molti casi siamo interessati a grandi network con grado medio finito $\langle
 \subsection{Emergenza della componente gigante}
 \err{SISTEMA}
 Consideriamo il caso in cui $p = 0$: non vi sono link nella rete ed essa è completamente sconnessa. \ext{ Ogni vertice è un'isola a sé stante; la rete possiede $N$ componenti separate costituite esattamente da un singolo vertice ciascuna}. Nel limite opposto, quando $p = 1$, ogni vertice è connesso direttamente a tutti gli altri, creando un'unica componente che copre l'intera rete. Concentriamoci ora sulla dimensione della componente più grande della rete in ciascuno di questi casi. Nel primo caso ($p = 0$) la componente più grande ha dimensione 1. Nel secondo ($p = 1$) la componente più grande ha dimensione $N$. Nel primo caso, la dimensione della componente più grande è indipendente dal numero di vertici $N$ della rete; nel secondo è proporzionale a $N$, ovvero è estensiva. \ext{ In molte applicazioni delle reti è cruciale che esista una componente che riempia la gran parte della rete. Per esempio, nel caso di Internet, è importante che vi sia un cammino attraverso la rete che colleghi la maggior parte dei computer alla maggior parte degli altri. Se così non fosse, la rete non sarebbe in grado di svolgere la sua funzione prevista di garantire le comunicazioni computer-computer per i suoi utenti}. Una domanda interessante da porsi è come avvenga la transizione tra questi due estremi se costruiamo grafi casuali con valori di $p$ gradualmente crescenti, partendo da 0 e finendo a 1. Potremmo intuire, per esempio, che la dimensione della componente più grande aumenti in qualche modo gradualmente con $p$, diventando estensiva solo nel limite in cui $p = 1$. In realtà, accade qualcosa di molto più interessante. Come vedremo, la dimensione della componente più grande subisce un cambiamento improvviso, o transizione di fase, da dimensione costante a dimensione estensiva in corrispondenza di un particolare valore speciale di $p$. Una componente della rete la cui dimensione cresce proporzionalmente a $n$ è chiamata componente gigante. La dimensione della componente gigante $S$, definita come la frazione di nodi che vi appartengono, nel limite di Poisson è data dall'equazione trascendente:
-\begin{equation}  
-      \quad \boxed{S = 1 - e^{-\langle k \rangle S}}
-       \label{eq:giant_comp}
+\begin{equation}
+    \quad \boxed{S = 1 - e^{-\langle k \rangle S}}
+    \label{eq:giant_comp}
 \end{equation}
 e il punto critico di percolazione, ovvero il punto in cui la componente gigante emerge, è dato da
 \begin{equation}
@@ -126,7 +128,7 @@ come ricavato in \cref{sec:GC}.
 
 \subsection{Regimi ELIMINARE?}
 \ext{
-Possiamo distinguere quattro regimi topologici distinti \cite[Cap. 3.6]{barabasi2016network}:}
+    Possiamo distinguere quattro regimi topologici distinti \cite[Cap. 3.6]{barabasi2016network}:}
 \begin{itemize}
     \item \textbf{Regime subcritico ($\langle k \rangle < 1$):} In questo regime, la rete è composta da numerosi cluster finiti di dimensione limitata. La dimensione massima dei cluster cresce al massimo come $\log N$, e non esiste una componente gigante. La rete è frammentata e non connessa.
 
@@ -140,37 +142,58 @@ Possiamo distinguere quattro regimi topologici distinti \cite[Cap. 3.6]{barabasi
 Per quantificare la transizione di fase possiamo introduere due quantità fondamentali:
 \begin{itemize}
     \item \textbf{Parametro d'ordine $P_\infty$:} Definito come la probabilità che un nodo appartenga alla componente gigante, coincide dunque con la frazione di nodi appartenenti alla componente gigante $S$. Questo parametro permette di distinguere una fase ordinata ($P_\infty > 0$) da una disordinata ($P_\infty = 0$). Per la teoria della percolazione si ha che \err{REF?}:
-\begin{equation}
-    S \sim (\langle k \rangle - \langle k \rangle_c)^\beta \quad \text{per } \langle k \rangle \to \langle k \rangle_c^+
-\end{equation}
-con  $\beta > 0$ esponente critico. \err{Ovvero la dimensione della componente gigante cresce in modo continuo partendo da $S=0$ al punto critico.}
+          \begin{equation}
+              P_\infty = S \sim (\langle k \rangle - \langle k \rangle_c)^\beta \quad \text{per } \langle k \rangle \to \langle k \rangle_c^+
+          \end{equation}
+          con  $\beta > 0$ esponente critico. \err{Ovvero la dimensione della componente gigante cresce in modo continuo partendo da $S=0$ al punto critico.}
     \item \textbf{Suscettività $\chi$:} Definita come la dimensione media dei cluster piccoli $ \langle s \rangle$, rappresenta la sensibilità della rete a variazioni di $\langle k \rangle$. Per la teoria della percolazione si ha che \err{REF?}:
-\begin{equation}    \chi \sim |\langle k \rangle - \langle k \rangle_c|^{-\gamma} \quad \text{per } \langle k \rangle \to \langle k \rangle_c
-\end{equation}
-con $\gamma > 0$ esponente critico. Ovvero la dimensione media dei cluster piccoli diverge al punto critico.
+          \begin{equation}    \chi = \langle s \rangle \sim |\langle k \rangle - \langle k \rangle_c|^{-\gamma} \quad \text{per } \langle k \rangle \to \langle k \rangle_c
+          \end{equation}
+          con $\gamma > 0$ esponente critico. Ovvero la dimensione media dei cluster piccoli diverge al punto critico.
 \end{itemize}
 Per quanto riguarda il parametro d'ordine, utilizzando \eqref{eq:giant_comp} possiamo espandere l'esponenziale in serie di Taylor al secondo ordine attorno a $\langle k \rangle_c = 1$ e ottenere \err{REF?}:
 \begin{equation}
-    S \approx 2(\langle k \rangle - 1)
+    P_\infty = S \approx 2(\langle k \rangle - 1)
 \end{equation}
 Quindi, vicino al punto critico, il parametro d'ordine cresce linearmente con $\langle k \rangle - 1$, indicando che l'esponente critico $\beta$ è pari a 1:
 \begin{equation}
-    S \sim (\langle k \rangle - 1)^1 \quad \text{per } \langle k \rangle \to 1^+
+    P_\infty \sim (\langle k \rangle - 1)^1 \quad \text{per } \langle k \rangle \to 1^+
 \end{equation}
- \err{Mettere grafico S-K teorico con considerazioni?}
+\err{Mettere grafico S-K teorico con considerazioni?}
 
 Invece, per quanto riguarda la suscettività, nel regime subcritico la dimensione media delle componenti piccole $ \langle s \rangle$, è data da \cref{sec:small_components}:
 \begin{equation}
     \langle s \rangle = \frac{\sum_{s} s^2 N_s}{\sum_{s} s N_s}
 \end{equation}
-dove $N_s$ è il numero di cluster di dimensione $s$. Si può dimostrare che $\langle s \rangle$ diverge al punto critico con un esponente critico $\gamma = 1$ \cite[Cap. 12.6]{newman2018networks}:
+dove $N_s$ è il numero di cluster di dimensione $s$. Si può dimostrare che $\chi$ è dato da:
 \begin{equation}
-    \langle s \rangle \sim \frac{1}{|1 - \langle k \rangle|} 
+    \chi = \langle s \rangle = \frac{1}{1 - \langle k \rangle + \langle k \rangle S}
 \end{equation}
-indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica. Inoltre, la divergenza di $\langle s \rangle$ al punto critico riflette l'emergere di cluster di tutte le dimensioni secondo una legge a potenza indicando così un'esplosione delle fluttuazioni, caratteristica universale delle transizioni di fase continue.
+Nel regime subcritico ($\langle k \rangle < 1$) si ha $S = 0$, quindi la suscettività diverge al punto critico con un un esponente critico $\gamma = 1$:
+\begin{equation}
+    \chi = (1- \langle k \rangle)^{-1} \quad \text{per } \langle k \rangle \to 1^-
+\end{equation}
+indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica. Inoltre, la divergenza di $\chi$ al punto critico riflette l'emergere di cluster di tutte le dimensioni secondo una legge a potenza indicando così un'esplosione delle fluttuazioni, caratteristica universale delle transizioni di fase continue.
 
-\err{Mettere grafico divergenza suscettività?}
+\err{Mettere grafico divergenza suscettività?} 
 
+\begin{figure}[htbp] % h=here, t=top, b=bottom, p=page
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Pannello (a).}
+        
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Pannello (b).}
+        
+    \end{subfigure}
+    \caption{Confronto tra le due sottografie.}
+\end{figure}
 \section{Percolazione inversa e robustezza}
 Una delle caratteristiche di maggiore interesse per un network è la sua \textbf{robustezza}, ovvero la capacità di mantenere la connettività globale nonostante la rimozione di nodi o link. La teoria della percolazione fornisce un quadro teorico per analizzare questo aspetto attraverso il concetto di \emph{percolazione inversa}, in cui si rimuovono nodi o link in modo casuale o mirato, e si studia come ciò influenzi la dimensione della componente gigante.
 
@@ -186,7 +209,16 @@ oltre la quale la rete collassa e perde la componente gigante. Nel caso del mode
 \begin{equation}
     f_c = 1 - \frac{1}{\langle k \rangle}
 \end{equation}
-Questo risultato mostra che la robustezza di questo network dipende unicamente dal grado medio $\langle k \rangle$: reti con grado medio più elevato sono più robuste alla rimozione casuale di nodi, poiché la soglia critica $f_c$ è più alta. Tuttavia, è sufficiente rimuovere una frazione $f_c < f < 1$ di nodi per far collassare la rete, evidenziando la vulnerabilità intrinseca del modello di Erdős-Rényi-Gilbert a fallimenti casuali. \ext{Questo comportamento è in contrasto con reti con distribuzioni dei gradi più eterogenee (come le reti scale-free), che possono essere molto più robuste a fallimenti casuali ma estremamente vulnerabili a attacchi mirati contro i nodi più connessi \cite[Cap. 8]{barabasi2016network}}.
+Questo risultato mostra che la robustezza di questo network dipende unicamente dal grado medio $\langle k \rangle$: reti con grado medio più elevato sono più robuste alla rimozione casuale di nodi, poiché la soglia critica $f_c$ è più alta. Tuttavia, è sufficiente rimuovere una frazione $f_c < f < 1$ di nodi per far collassare la rete, evidenziando la vulnerabilità intrinseca del modello di Erdős-Rényi-Gilbert a fallimenti casuali.
+
+As we
+approach the percolation transition from above the network may be “functional” in
+the sense of having a giant cluster, but the functional portion of the network is vanishingly small. Thus one could argue that it is misleading to interpret the percolation threshold
+as the point where the network stops functioning: in effect most of it has stopped functioning
+before we reach this point. To fully describe the functional state of the network one should specify
+not only whether it contains a giant cluster but also what the size of that cluster is. 
+
+\ext{Questo comportamento è in contrasto con reti con distribuzioni dei gradi più eterogenee (come le reti scale-free), che possono essere molto più robuste a fallimenti casuali ma estremamente vulnerabili a attacchi mirati contro i nodi più connessi \cite[Cap. 8]{barabasi2016network}}.
 
 \section{Simulazione e risultati}
 \section{Conclusioni}
@@ -198,14 +230,14 @@ Sia $u$ la frazione di nodi che non appartengono alla componente gigante (GC) e 
     u = 1 - S
 \end{equation}
 Un nodo $i$ non appartiene alla GC se, per ogni altro nodo $j$, o non esiste un arco ($1-p$) oppure esiste un arco ma $j$ non è nella GC ($pu$). La probabilità totale per un singolo nodo $j$ è
-   $1 - p + pu$.
+$1 - p + pu$.
 Considerando tutti gli $N-1$ possibili vicini, la probabilità che $i$ non sia connesso alla GC è:
 \begin{equation}
     u = (1 - p + pu)^{N-1}
 \end{equation}
 Sostituendo la probabilità di connessione $p = \frac{\langle k \rangle}{N-1}$, passando ai logaritmi e utilizzando l'approssimazione $\ln(1+x) \approx x$ per $x \ll 1$, otteniamo:
 \begin{equation}
-\ln u = -\langle k \rangle (1-u)
+    \ln u = -\langle k \rangle (1-u)
 \end{equation}
 Esponenziando entrambi i membri otteniamo un'equazione trascendente per $u$:
 \begin{equation}
@@ -235,7 +267,7 @@ Sfruttando l'approssimazione $(1-x/n)^n \approx e^{-x}$, il numero atteso di nod
 \end{equation}
 La condizione di connettività completa si raggiunge quando rimane al massimo un solo nodo isolato nel sistema ($I_N = 1$). Risolvendo l'equazione:
 \begin{equation}
-1 = N e^{-\langle k \rangle} \quad \Longrightarrow \quad \langle k \rangle = \ln N
+    1 = N e^{-\langle k \rangle} \quad \Longrightarrow \quad \langle k \rangle = \ln N
 \end{equation}
 
 \subsection{Dimensione media delle componenti piccole} \label{sec:small_components}
