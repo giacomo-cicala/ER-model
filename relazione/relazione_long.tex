@@ -143,11 +143,11 @@ Per quantificare la transizione di fase possiamo introduere due quantità fondam
 \begin{itemize}
     \item \textbf{Parametro d'ordine $P_\infty$:} Definito come la probabilità che un nodo appartenga alla componente gigante, coincide dunque con la frazione di nodi appartenenti alla componente gigante $S$. Questo parametro permette di distinguere una fase ordinata ($P_\infty > 0$) da una disordinata ($P_\infty = 0$). Per la teoria della percolazione si ha che \err{REF?}:
           \begin{equation}
-              P_\infty = S \sim (\langle k \rangle - \langle k \rangle_c)^\beta \quad \text{per } \langle k \rangle \to \langle k \rangle_c^+
+              P_\infty = S \sim (\langle k \rangle - \langle k \rangle_c)^\beta \quad\quad \langle k \rangle \to \langle k \rangle_c^+
           \end{equation}
           con  $\beta > 0$ esponente critico. \err{Ovvero la dimensione della componente gigante cresce in modo continuo partendo da $S=0$ al punto critico.}
     \item \textbf{Suscettività $\chi$:} Definita come la dimensione media dei cluster piccoli $ \langle s \rangle$, rappresenta la sensibilità della rete a variazioni di $\langle k \rangle$. Per la teoria della percolazione si ha che \err{REF?}:
-          \begin{equation}    \chi = \langle s \rangle \sim |\langle k \rangle - \langle k \rangle_c|^{-\gamma} \quad \text{per } \langle k \rangle \to \langle k \rangle_c
+          \begin{equation}    \chi = \langle s \rangle \sim |\langle k \rangle - \langle k \rangle_c|^{-\gamma} \quad\quad \langle k \rangle \to \langle k \rangle_c
           \end{equation}
           con $\gamma > 0$ esponente critico. Ovvero la dimensione media dei cluster piccoli diverge al punto critico.
 \end{itemize}
@@ -157,7 +157,7 @@ Per quanto riguarda il parametro d'ordine, utilizzando \eqref{eq:giant_comp} pos
 \end{equation}
 Quindi, vicino al punto critico, il parametro d'ordine cresce linearmente con $\langle k \rangle - 1$, indicando che l'esponente critico $\beta$ è pari a 1:
 \begin{equation}
-    P_\infty \sim (\langle k \rangle - 1)^1 \quad \text{per } \langle k \rangle \to 1^+
+    P_\infty \sim (\langle k \rangle - 1)^1 \quad\quad \langle k \rangle \to 1^+
 \end{equation}
 \err{Mettere grafico S-K teorico con considerazioni?}
 
@@ -169,10 +169,19 @@ dove $N_s$ è il numero di cluster di dimensione $s$. Si può dimostrare che $\c
 \begin{equation}
     \chi = \langle s \rangle = \frac{1}{1 - \langle k \rangle + \langle k \rangle S}
 \end{equation}
-Nel regime subcritico ($\langle k \rangle < 1$) si ha $S = 0$, quindi la suscettività diverge al punto critico con un un esponente critico $\gamma = 1$:
+Nel regime subcritico ($\langle k \rangle < 1$) si ha $S = 0$, dunque:
 \begin{equation}
-    \chi = (1- \langle k \rangle)^{-1} \quad \text{per } \langle k \rangle \to 1^-
+    \chi = (1- \langle k \rangle)^{-1} \quad\quad \langle k \rangle < 1
 \end{equation}
+Nel regime supercritico ($\langle k \rangle > 1$), sviluppando $S$ in serie di Taylor attorno a $\langle k \rangle_c = 1$ come fatto precedentemente, si ottiene:
+\begin{equation}
+    \chi = (1 + \langle k \rangle)^{-1} \quad\quad  \langle k \rangle \to 1^+
+\end{equation}
+quindi la suscettività diverge al punto critico con un un esponente critico $\gamma = 1$:
+\begin{equation}
+    \chi \sim |\langle k \rangle - 1|^{-1} \quad\quad \langle k \rangle \to 1
+\end{equation}
+
 indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica. Inoltre, la divergenza di $\chi$ al punto critico riflette l'emergere di cluster di tutte le dimensioni secondo una legge a potenza indicando così un'esplosione delle fluttuazioni, caratteristica universale delle transizioni di fase continue.
 
 \err{Mettere grafico divergenza suscettività?} 
