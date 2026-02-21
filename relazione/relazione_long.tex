@@ -139,25 +139,27 @@ come ricavato in \cref{sec:GC}.
     \item \textbf{Regime completamente connesso ($\langle k \rangle > \ln N$):} In questo regime, il numero di aspettazione di nodi isolati è inferiore a 1 \cref{sec:connected_regime}, e la rete è quasi sicuramente completamente connessa.
 \end{itemize}
 \subsection{Transizione di fase}
-Per quantificare la transizione di fase possiamo introduere due quantità fondamentali:
+Per quantificare la transizione di fase possiamo introdurre due quantità fondamentali:
 \begin{itemize}
-    \item \textbf{Parametro d'ordine $P_\infty$:} Definito come la probabilità che un nodo appartenga alla componente gigante, coincide dunque con la frazione di nodi appartenenti alla componente gigante $S$. Questo parametro permette di distinguere una fase ordinata ($P_\infty > 0$) da una disordinata ($P_\infty = 0$). Per la teoria della percolazione si ha che \err{REF?}:
+    \item \textbf{Parametro d'ordine $S$:} Definito come la frazione di nodi appartenenti alla componente gigante, permette di distinguere una fase ordinata ($S > 0$) da una disordinata ($S = 0$). Per la teoria della percolazione si ha che \err{REF?}:
           \begin{equation}
-              P_\infty = S \sim (\langle k \rangle - \langle k \rangle_c)^\beta \quad\quad \langle k \rangle \to \langle k \rangle_c^+
+              S \sim (\langle k \rangle - \langle k \rangle_c)^\beta \quad\quad \langle k \rangle \to \langle k \rangle_c^+
+              \label{eq:order_parameter}
           \end{equation}
-          con  $\beta > 0$ esponente critico. \err{Ovvero la dimensione della componente gigante cresce in modo continuo partendo da $S=0$ al punto critico.}
+          con  $\beta > 0$ esponente critico.
     \item \textbf{Suscettività $\chi$:} Definita come la dimensione media dei cluster piccoli $ \langle s \rangle$, rappresenta la sensibilità della rete a variazioni di $\langle k \rangle$. Per la teoria della percolazione si ha che \err{REF?}:
           \begin{equation}    \chi = \langle s \rangle \sim |\langle k \rangle - \langle k \rangle_c|^{-\gamma} \quad\quad \langle k \rangle \to \langle k \rangle_c
+              \label{eq:susceptibility}
           \end{equation}
           con $\gamma > 0$ esponente critico. Ovvero la dimensione media dei cluster piccoli diverge al punto critico.
 \end{itemize}
 Per quanto riguarda il parametro d'ordine, utilizzando \eqref{eq:giant_comp} possiamo espandere l'esponenziale in serie di Taylor al secondo ordine attorno a $\langle k \rangle_c = 1$ e ottenere \err{REF?}:
 \begin{equation}
-    P_\infty = S \approx 2(\langle k \rangle - 1)
+    S \approx 2(\langle k \rangle - 1)
 \end{equation}
 Quindi, vicino al punto critico, il parametro d'ordine cresce linearmente con $\langle k \rangle - 1$, indicando che l'esponente critico $\beta$ è pari a 1:
 \begin{equation}
-    P_\infty \sim (\langle k \rangle - 1)^1 \quad\quad \langle k \rangle \to 1^+
+    S \sim (\langle k \rangle - 1)^1 \quad\quad \langle k \rangle \to 1^+
 \end{equation}
 \err{Mettere grafico S-K teorico con considerazioni?}
 
@@ -165,7 +167,7 @@ Invece, per quanto riguarda la suscettività, nel regime subcritico la dimension
 \begin{equation}
     \langle s \rangle = \frac{\sum_{s} s^2 N_s}{\sum_{s} s N_s}
 \end{equation}
-dove $N_s$ è il numero di cluster di dimensione $s$. Si può dimostrare che $\chi$ è dato da:
+dove $N_s$ è il numero di cluster di dimensione $s$. Si può dimostrare che $\chi$ è dato da \err{REF?}:
 \begin{equation}
     \chi = \langle s \rangle = \frac{1}{1 - \langle k \rangle + \langle k \rangle S}
 \end{equation}
@@ -184,22 +186,22 @@ quindi la suscettività diverge al punto critico con un un esponente critico $\g
 
 indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica. Inoltre, la divergenza di $\chi$ al punto critico riflette l'emergere di cluster di tutte le dimensioni secondo una legge a potenza indicando così un'esplosione delle fluttuazioni, caratteristica universale delle transizioni di fase continue.
 
-\err{Mettere grafico divergenza suscettività?} 
+\err{Mettere grafico divergenza suscettività?}
 
 \begin{figure}[htbp] % h=here, t=top, b=bottom, p=page
     \centering
-    \begin{subfigure}[t]{0.48\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{example-image}
+        \includegraphics[width=\linewidth]{S.png}
         \caption{Pannello (a).}
-        
+
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.48\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
         \includegraphics[width=\linewidth]{example-image}
         \caption{Pannello (b).}
-        
+
     \end{subfigure}
     \caption{Confronto tra le due sottografie.}
 \end{figure}
@@ -225,11 +227,73 @@ approach the percolation transition from above the network may be “functional�
 the sense of having a giant cluster, but the functional portion of the network is vanishingly small. Thus one could argue that it is misleading to interpret the percolation threshold
 as the point where the network stops functioning: in effect most of it has stopped functioning
 before we reach this point. To fully describe the functional state of the network one should specify
-not only whether it contains a giant cluster but also what the size of that cluster is. 
+not only whether it contains a giant cluster but also what the size of that cluster is.
 
 \ext{Questo comportamento è in contrasto con reti con distribuzioni dei gradi più eterogenee (come le reti scale-free), che possono essere molto più robuste a fallimenti casuali ma estremamente vulnerabili a attacchi mirati contro i nodi più connessi \cite[Cap. 8]{barabasi2016network}}.
 
 \section{Simulazione e risultati}
+Per verificare le previsioni teoriche, sono state condotte simulazioni numeriche in Python utilizzando la libreria \emph{igraph}.
+
+\subsection{Transizione di fase}
+Per quanto riguarda la transizione di fase, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ nodi diversi valori di $\langle k \rangle \in [0, 5]$ . Per ogni grafo, è stata calcolata la dimensione della componente gigante $S$  (\cref{fig:S}) e la suscettività $\chi$  (\cref{fig:chi}): per ciascun valore di $\langle k \rangle$, è stato associato un valore medio di $S$ e $\chi$ calcolato sull'insieme di grafi, con incertezza data dalla deviazione standard. Per ottenere un'analisi quantitativa, si sono eseguiti fit dei dati simulati con le leggi di potenza previste dalla teoria della percolazione \eqref{eq:order_parameter} \eqref{eq:susceptibility}, al fine di estrarre gli esponenti critici $\beta$ e $\gamma$ e confrontarli con i valori teorici.
+
+\begin{figure}[htbp]
+    \centering
+    \makebox[\textwidth][c]{
+        \begin{minipage}{1.2\textwidth} % Allarga la riga al 120%
+
+            \begin{subfigure}[t]{0.49\linewidth}
+                \centering
+                \includegraphics[width=\linewidth]{S.png}
+                \caption{}
+            \end{subfigure}
+            \hfill
+            \begin{subfigure}[t]{0.49\linewidth}
+                \centering
+                \includegraphics[width=\linewidth]{S_fit.png}
+                \caption{.}
+            \end{subfigure}
+
+        \end{minipage}
+    }
+    \caption{A sinistra (a) la dimensione della componente gigante $S$ in funzione di $\langle k \rangle$. A destra (b) il fit dei dati effettuato nel range $\langle k \rangle \in [1 , 1.1]$.}
+    \label{fig:S}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \makebox[\textwidth][c]{
+        \begin{minipage}{1.2\textwidth} % Stessa larghezza per coerenza visiva
+
+            \begin{subfigure}[t]{0.49\linewidth}
+                \centering
+                \includegraphics[width=\linewidth]{chi.png}
+                \caption{}
+            \end{subfigure}
+            \hfill
+            \begin{subfigure}[t]{0.49\linewidth}
+                \centering
+                \includegraphics[width=\linewidth]{chi_fit.png}
+                \caption{}
+            \end{subfigure}
+
+        \end{minipage}
+    }
+    \caption{A sinistra (a) la suscettività $\chi$ in funzione di $\langle k \rangle$. A destra (b) il fit dei dati effettuato nel range $\langle k \rangle \in [0. , 0.95] \cup [1.05, 2]$.}
+    \label{fig:chi}
+\end{figure}
+
+I risultati dei fit e i rispettivi valori teorici sono:
+\begin{equation}
+    \beta_{\text{fit}} = 0.94 \pm 0.04 \quad\quad \beta_{\text{teo}} = 1
+\end{equation}
+\begin{equation}
+    \gamma_{\text{fit}} = 0.997 \pm 0.01 \quad\quad \gamma_{\text{teo}} = 1
+\end{equation}
+Nonostante a livello qualitativo i dati simulati mostrino un comportamento coerente con le previsioni teoriche, a livello quantitativo si osservano deviazioni significative dagli esponenti critici teorici. Queste discrepanze potrebbero essere attribuite a diversi fattori, tra cui effetti di finite-size dovuti alla dimensione finita della rete simulata.
+
+\subsection{Percolazione inversa}
+
 \section{Conclusioni}
 \appendix
 \section{Appendici}
