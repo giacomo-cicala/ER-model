@@ -186,25 +186,6 @@ quindi la suscettività diverge al punto critico con un un esponente critico $\g
 
 indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica. Inoltre, la divergenza di $\chi$ al punto critico riflette l'emergere di cluster di tutte le dimensioni secondo una legge a potenza indicando così un'esplosione delle fluttuazioni, caratteristica universale delle transizioni di fase continue.
 
-\err{Mettere grafico divergenza suscettività?}
-
-\begin{figure}[htbp] % h=here, t=top, b=bottom, p=page
-    \centering
-    \begin{subfigure}[t]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{S.png}
-        \caption{Pannello (a).}
-
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{example-image}
-        \caption{Pannello (b).}
-
-    \end{subfigure}
-    \caption{Confronto tra le due sottografie.}
-\end{figure}
 \section{Percolazione inversa e robustezza}
 Una delle caratteristiche di maggiore interesse per un network è la sua \textbf{robustezza}, ovvero la capacità di mantenere la connettività globale nonostante la rimozione di nodi o link. La teoria della percolazione fornisce un quadro teorico per analizzare questo aspetto attraverso il concetto di \emph{percolazione inversa}, in cui si rimuovono nodi o link in modo casuale o mirato, e si studia come ciò influenzi la dimensione della componente gigante.
 
@@ -285,47 +266,38 @@ Per quanto riguarda la transizione di fase, è stato creato un ensemble di $M = 
 
 I risultati dei fit e i rispettivi valori teorici sono:
 \begin{equation}
-   \tilde{\chi_\beta} = 3 \quad\quad \beta_{\text{fit}} = 0.94 \pm 0.04 \quad\quad \beta_{\text{teo}} = 1
+   \tilde{\chi_\beta}^2 = 4.5 \quad\quad \beta_{\text{fit}} = 0.94 \pm 0.04 \quad\quad \beta_{\text{teo}} = 1
 \end{equation}
 \begin{equation}
-    \tilde{\chi_\gamma} = 3 \quad\quad \gamma_{\text{fit}} = 0.997 \pm 0.01 \quad\quad \gamma_{\text{teo}} = 1
+    \tilde{\chi_\gamma}^2 = 663 \quad\quad \gamma_{\text{fit}} = 0.997 \pm 0.01 \quad\quad \gamma_{\text{teo}} = 1
 \end{equation}
 Nonostante a livello qualitativo i dati simulati mostrino un comportamento coerente con le previsioni teoriche, a livello quantitativo si osservano deviazioni significative dagli esponenti critici teorici. Queste discrepanze potrebbero essere attribuite a diversi fattori, tra cui effetti di finite-size dovuti alla dimensione finita della rete simulata.
 
 \subsection{Percolazione inversa}
-Per quanto riguarda la percolazione inversa, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ per diversi valori di $\langle k \rangle \in [2 , 11]$. Per ogni grafo, è stata rimossa una frazione $f$ di nodi scelta casualmente, e per diversi valori di $f \in [0,1]$ è stata calcolata la dimensione della componente gigante $S$ mediando su tutti i grafi dell'ensemble, usando come incertezza la deviazione standard \cref{fig:percolation}. Per ogni valore di $\langle k \rangle$, è stata ricavata la soglia critica di percolazione $f_c$ effettuando dei fit lineari in corrispondenza di tale punto cercando l'intercetta sull'asse x; i valori ottenuti sono poi stati riportati nel grafico \cref{fig:fc}, nel quale si è eseguito un fit con la distribuzione teorica 
+Per quanto riguarda la percolazione inversa, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ per diversi valori di $\langle k \rangle \in [2 , 11]$. Per ogni grafo, è stata rimossa una frazione $f$ di nodi scelti casualmente, e per diversi valori di $f \in [0,1]$ è stata calcolata la dimensione della componente gigante $S$ (normalizzata rispetto alla dimensione originale della componente gigante $S(0)$) mediando su tutti i grafi dell'ensemble, usando come incertezza la deviazione standard (\cref{fig:percolation}). Per ogni valore di $\langle k \rangle$, è stata ricavata la soglia critica di percolazione $f_c$ effettuando dei fit lineari in corrispondenza di tale punto cercando l'intercetta sull'asse x; i valori ottenuti sono poi stati riportati nel grafico (\cref{fig:fc}), nel quale si è eseguito un fit con la distribuzione teorica 
 \begin{equation}
     f_c = 1 - \frac{\alpha}{\langle k \rangle}
 \end{equation}
 dove $\alpha$ è un parametro di fit, per verificarne la coerenza con la teoria. Il risultato del fit e il rispettivo valore teorico sono:
 \begin{equation}
-    \tilde{\chi} = 50 \quad\quad \alpha_{\text{fit}} = 0.98 \pm 0.02 \quad\quad \alpha_{\text{teo}} = 1
+    \tilde{\chi} = 55 \quad\quad \alpha_{\text{fit}} = 0.985 \pm 0.001 \quad\quad \alpha_{\text{teo}} = 1
 \end{equation}
 
 \begin{figure}[htbp]
     \centering
-    \makebox[\textwidth][c]{
-        \begin{minipage}{1.2\textwidth} % Allarga la riga al 120%
-
-            \begin{subfigure}[t]{0.49\linewidth}
-                \centering
-                \includegraphics[width=\linewidth]{example-image}
-                \caption{}
-            \end{subfigure}
-            \hfill
-            \begin{subfigure}[t]{0.49\linewidth}
-                \centering
-                \includegraphics[width=\linewidth]{example-image}
-                \caption{}
-            \end{subfigure}
-
-        \end{minipage}
-    }
-    \caption{A sinistra (a) la dimensione della componente gigante $S$ in funzione della frazione di nodi rimossi $f$ per diversi valori di $\langle k \rangle$. A destra (b) la soglia critica di percolazione $f_c$ in funzione di $\langle k \rangle$ con fit teorico.}
+    \includegraphics[width=0.9\textwidth]{perc.png}
+    \caption{Dimensione relativa della componente gigante $S(f)/S(0)$ in funzione della frazione di nodi rimossi $f$ per diversi valori di $\langle k \rangle$.}
     \label{fig:percolation}
 \end{figure}
 
-Anche in questo caso, nonostante a livello qualitativo i dati simulati mostrino un comportamento coerente con le previsioni teoriche, a livello quantitativo si osservano deviazioni significative dal valore teorico di $\alpha$.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{tresh.png}
+    \caption{Soglia critica di percolazione $f_c$ in funzione di $\langle k \rangle$ con fit teorico.}
+    \label{fig:fc}
+\end{figure}
+
+Anche in questo caso, nonostante a livello qualitativo i dati simulati mostrino un comportamento coerente con le previsioni teoriche, a livello quantitativo si osservano deviazioni significative dal valore teorico di $\alpha$ e un $\tilde{\chi}^2$ alto causato plausibilmente dalle basse incertezze statistiche e dalle deviazioni sistematiche di $f_c$ per $\langle k \rangle > 6$ causate da effetti di finite-size.
 
 
 \section{Conclusioni}
