@@ -45,33 +45,27 @@
 \renewcommand{\abstractname}{Abstract}
 
 \section{Introduzione}
-\err{SISTEMA}
-Negli ultimi decenni, lo studio dei sistemi complessi ha subito una profonda accelerazione grazie allo sviluppo della \emph{Network Science}, un framework teorico che permette di descrivere sistemi apparentemente disparati, dalle reti metaboliche nella cellula, alle infrastrutture tecnologiche come Internet, fino alle reti sociali, attraverso un linguaggio matematico unificato \cite[Cap. 1]{barabasi2016network}.
-Una delle questioni centrali in questo ambito riguarda l'emergere spontaneo di proprietà macroscopiche a partire da interazioni locali disordinate. In particolare, è fondamentale comprendere i meccanismi che garantiscono la connettività globale del sistema e, di riflesso, la sua \textbf{robustezza} a fronte di fallimenti casuali dei componenti (\emph{random failures}).
+Negli ultimi decenni, lo studio dei sistemi complessi ha subito una profonda accelerazione grazie allo sviluppo della \emph{Network Science}, un framework teorico che permette di descrivere sistemi apparentemente disparati, dalle reti metaboliche nella cellula, alle infrastrutture tecnologiche come Internet, fino alle reti sociali, attraverso un linguaggio matematico unificato.
+Una delle questioni centrali in questo ambito riguarda l'emergere spontaneo di proprietà macroscopiche a partire da interazioni locali disordinate. In particolare, è fondamentale comprendere i meccanismi che garantiscono la connettività globale del sistema e, di riflesso, la sua \emph{robustezza} a fronte di fallimenti casuali dei componenti (\emph{random failures}).
 
 Il presente elaborato si propone di analizzare la stabilità strutturale delle reti attraverso lo studio della \emph{teoria della percolazione}, applicata al modello di grafi casuali di Erdős-Rényi $G(N, p)$.
-Come discusso da Newman \cite[Cap. 16]{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto da isole disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che abbraccia l'intero sistema.
+Come discusso da Newman \cite{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto da isole disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che connette l'intero sistema.
 
-Sebbene le reti reali presentino spesso correlazioni topologiche complesse (come la proprietà \emph{scale-free}), il modello di Erdős-Rényi-Gilbert costituisce il "modello nullo" di riferimento, analogo al gas ideale in termodinamica. In questo modello, la probabilità di connessione tra i nodi è uniforme e indipendente, permettendo di trattare la transizione di fase in approssimazione di campo medio (\emph{Mean Field}).
-L'analisi di questo sistema possiede una forte valenza fisica: la soglia critica di percolazione identifica il punto esatto di rottura del sistema. Sotto questa soglia, la rete perde la sua funzionalità globale; sopra di essa, emerge l'ordine a lungo raggio.
+Sebbene le reti reali presentino spesso correlazioni complesse, il modello di Erdős-Rényi-Gilbert costituisce il "modello nullo" di riferimento, analogo al gas ideale in termodinamica.
 
 \subsection{Obiettivi del lavoro}
-\err{SISTEMA}
-Lo scopo centrale di questo elaborato è lo studio della \emph{teoria della percolazione} come chiave di lettura fondamentale per comprendere le transizioni di fase topologiche nelle reti complesse.
-Utilizzando il modello di Erdős-Rényi-Gilbert come sistema di riferimento, il lavoro si prefigge i seguenti obiettivi:
+Lo scopo centrale di questo elaborato è lo studio della \emph{teoria della percolazione} come chiave di lettura per comprendere le transizioni di fase e la resilienza nelle reti complesse.
+Utilizzando il modello di Erdős-Rényi-Gilbert come sistema di riferimento analitico, il lavoro si prefigge i seguenti obiettivi:
 
 \begin{itemize}
-    \item \textbf{Analisi della soglia di percolazione:} Derivare analiticamente, mediante il formalismo delle funzioni generatrici \cite[Cap. 12]{newman2018networks}, la condizione critica $\langle k \rangle_c = 1$. Questo valore segna l'emersione del \emph{cluster di percolazione} (o componente gigante), corrispondente alla rottura di simmetria del sistema e alla nascita dell'ordine a lungo raggio.
+    \item \textbf{Analisi teorica e computazionale dei fenomeni critici:} Studio della transizione di fase continua che porta all'emersione dell'ordine macroscopico (la \emph{componente gigante}). Dal punto di vista analitico, si ricaverà la soglia critica $\langle k \rangle_c = 1$ e si studierà il comportamento asintotico del parametro d'ordine $S$ e della suscettività topologica $\chi$. Computazionalmente, si verificheranno le leggi di \emph{scaling} universali tramite simulazioni numeriche su \emph{ensemble} di grafi, estraendo gli esponenti critici $\beta$ e $\gamma$ mediante \emph{fit}.
 
-    \item \textbf{Caratterizzazione dei fenomeni critici:} Studiare il comportamento della \emph{suscettività topologica} ($\chi$), intesa come la dimensione media dei cluster finiti. Attraverso simulazioni numeriche, si intende verificare la divergenza di $\chi$ in prossimità della soglia critica, evidenziando la natura continua (del secondo ordine) della transizione, in analogia con i sistemi termodinamici vicino al punto critico.
-
-    \item \textbf{Implicazioni sulla robustezza:} Interpretare fisicamente la transizione di percolazione nel contesto della stabilità strutturale. Si discuterà come la scomparsa del cluster di percolazione (per $\langle k \rangle < 1$) corrisponda al punto di collasso funzionale (\emph{failure}) della rete, collegando così la meccanica statistica della percolazione al concetto di robustezza descritto da Barabási \cite[Cap. 8]{barabasi2016network}.
+    \item \textbf{Percolazione inversa e robustezza:} Valutazione teorica e numerica della stabilità del \emph{network} a fronte di fallimenti casuali (\emph{random failures}). Teoricamente, si ricaverà la frazione critica di nodi rimossi $f_c = 1 - 1/\langle k \rangle$ necessaria per causare il collasso funzionale del sistema. Questo processo verrà riprodotto computazionalmente, allo scopo di estrarre empiricamente le soglie di percolazione al variare della connettività iniziale e verificare tramite fit la validità della legge teorica.
 \end{itemize}
-
 \section{Elementi di teoria dei grafi}
-Prima di addentrarci nell'analisi del modello di Erdős-Rényi-Gilbert, è necessario introdurre alcuni concetti fondamentali della teoria dei grafi \cite[Sez. 2.3, 2.10]{barabasi2016network}. Un grafo $G$ è costituito da un insieme di nodi e un insieme di link che connettono coppie di nodi, rappresentando un'interazione tra di essi. La dimensione del grafo è data dal numero di nodi $N$, mentre la connettività è data dal numero totale di link $L$.
+Prima di addentrarci nell'analisi del modello di Erdős-Rényi-Gilbert, è necessario introdurre alcuni concetti fondamentali della teoria dei grafi \cite{barabasi2016network}. Un grafo $G$ è costituito da un insieme di nodi e un insieme di link che connettono coppie di nodi, rappresentando un'interazione tra di essi. La dimensione del grafo è data dal numero di nodi $N$, mentre la connettività è data dal numero totale di link $L$.
 Una proprietà fondamentale di ciascun nodo è il suo grado $k$, che rappresenta il numero di link che esso possiede verso altri nodi.
-In un grafo non orientato, il numero totale di link $L$, può essere espresso come \ext{la somma dei gradi dei nodi divisa per 2, poiché ogni link viene contato due volte (una volta per ciascuno dei due nodi che collega)}:
+In un grafo non orientato, il numero totale di link $L$, può essere espresso come:
 \begin{equation}
     L = \frac{1}{2} \sum_{i=1}^{N} k_i
 \end{equation}
@@ -90,7 +84,7 @@ Per una rete con $N$ nodi, la distribuzione dei gradi è data da:
 \end{equation}
 dove $N_k$ è il numero di nodi di grado $k$.
 \section{Modello di Erdős-Rényi-Gilbert}
-Il modello di Erdős-Rényi-Gilbert, denotato come $G(N, p)$, è un modello di grafo casuale in cui ogni coppia di $N$ nodi è connessa da un link con probabilità $p$.
+Il modello di Erdős-Rényi-Gilbert \cite{newman2018networks}, denotato come $G(N, p)$, è un modello di grafo casuale in cui ogni coppia di $N$ nodi è connessa da un link con probabilità $p$.
 In questo modello, il numero totale di link $L$ è una variabile casuale che segue una distribuzione binomiale
 \begin{equation}
     P(L) = \binom{\binom{N}{2}}{L} p^L (1-p)^{\binom{N}{2} - L}
@@ -107,15 +101,16 @@ Anche la distribuzione dei gradi $P(k)$ risulta essere binomiale:
 \begin{equation}
     P(k) = \binom{N-1}{k} p^k (1-p)^{N-1-k}
 \end{equation}
-In molti casi siamo interessati a grandi network con grado medio finito $\langle k \rangle$ indipendente dalla dimensione $N$. In questo limite, ovvero $ \langle k \rangle \ll N $, la distribuzione dei gradi si approssima a una distribuzione di Poisson:
+In molti casi siamo interessati a grandi network con grado medio finito $\langle k \rangle$ indipendente dalla dimensione $N$. In questo limite, ovvero $ \langle k \rangle \ll N $, la distribuzione dei gradi tende alla distribuzione di Poisson:
 \begin{equation}
     P(k) = \frac{\langle k \rangle^k e^{-\langle k \rangle}}{k!}
 \end{equation}
 
 \section{Transizione di fase di percolazione}
 \subsection{Emergenza della componente gigante}
-\err{SISTEMA}
-Consideriamo il caso in cui $p = 0$: non vi sono link nella rete ed essa è completamente sconnessa. \ext{ Ogni vertice è un'isola a sé stante; la rete possiede $N$ componenti separate costituite esattamente da un singolo vertice ciascuna}. Nel limite opposto, quando $p = 1$, ogni vertice è connesso direttamente a tutti gli altri, creando un'unica componente che copre l'intera rete. Concentriamoci ora sulla dimensione della componente più grande della rete in ciascuno di questi casi. Nel primo caso ($p = 0$) la componente più grande ha dimensione 1. Nel secondo ($p = 1$) la componente più grande ha dimensione $N$. Nel primo caso, la dimensione della componente più grande è indipendente dal numero di vertici $N$ della rete; nel secondo è proporzionale a $N$, ovvero è estensiva. \ext{ In molte applicazioni delle reti è cruciale che esista una componente che riempia la gran parte della rete. Per esempio, nel caso di Internet, è importante che vi sia un cammino attraverso la rete che colleghi la maggior parte dei computer alla maggior parte degli altri. Se così non fosse, la rete non sarebbe in grado di svolgere la sua funzione prevista di garantire le comunicazioni computer-computer per i suoi utenti}. Una domanda interessante da porsi è come avvenga la transizione tra questi due estremi se costruiamo grafi casuali con valori di $p$ gradualmente crescenti, partendo da 0 e finendo a 1. Potremmo intuire, per esempio, che la dimensione della componente più grande aumenti in qualche modo gradualmente con $p$, diventando estensiva solo nel limite in cui $p = 1$. In realtà, accade qualcosa di molto più interessante. Come vedremo, la dimensione della componente più grande subisce un cambiamento improvviso, o transizione di fase, da dimensione costante a dimensione estensiva in corrispondenza di un particolare valore speciale di $p$. Una componente della rete la cui dimensione cresce proporzionalmente a $n$ è chiamata componente gigante. La dimensione della componente gigante $S$, definita come la frazione di nodi che vi appartengono, nel limite di Poisson è data dall'equazione trascendente:
+Consideriamo il caso in cui $p = 0$: non vi sono link nella rete ed essa è completamente sconnessa. Nel limite opposto, quando $p = 1$, ogni vertice è connesso direttamente a tutti gli altri, creando un'unica componente che copre l'intera rete. Concentriamoci ora sulla dimensione della componente più grande della rete in ciascuno di questi casi: nel primo caso ($p = 0$) la componente più grande ha dimensione 1, el secondo ($p = 1$) la componente più grande ha dimensione $N$ (ovvero è estensiva). \ext{ In molte applicazioni delle reti è cruciale che esista una componente che riempia la gran parte della rete. Per esempio, nel caso di Internet, è importante che vi sia un cammino attraverso la rete che colleghi la maggior parte dei computer alla maggior parte degli altri. Se così non fosse, la rete non sarebbe in grado di svolgere la sua funzione prevista di garantire le comunicazioni computer-computer per i suoi utenti}.
+
+Una domanda interessante da porsi è come avvenga la transizione tra questi due estremi se costruiamo grafi casuali con valori di $p$ gradualmente crescenti, partendo da 0 e finendo a 1. Potremmo intuire, per esempio, che la dimensione della componente più grande aumenti in qualche modo gradualmente con $p$, diventando estensiva solo nel limite in cui $p = 1$. In realtà, la dimensione della componente più grande subisce un cambiamento improvviso, o transizione di fase, da dimensione costante a dimensione estensiva in corrispondenza di un particolare valore speciale di $p$. Una componente della rete la cui dimensione cresce proporzionalmente a $N$ è chiamata componente gigante. La dimensione della componente gigante $S$, definita come la frazione di nodi che vi appartengono, nel limite di Poisson è data dall'equazione trascendente:
 \begin{equation}
     \quad \boxed{S = 1 - e^{-\langle k \rangle S}}
     \label{eq:giant_comp}
@@ -126,10 +121,9 @@ e il punto critico di percolazione, ovvero il punto in cui la componente gigante
 \end{equation}
 come ricavato in \cref{sec:GC}.
 
-\subsection{Regimi ELIMINARE?}
-\ext{
-    Possiamo distinguere quattro regimi topologici distinti \cite[Cap. 3.6]{barabasi2016network}:}
-\begin{itemize}
+Possiamo distinguere quattro regimi topologici distinti \cite{barabasi2016network} \cref{fig:regimes} in funzione del grado medio $\langle k \rangle$:
+\begin{enumerate}
+    \renewcommand{\labelenumi}{\alph{enumi}.}
     \item \textbf{Regime subcritico ($\langle k \rangle < 1$):} In questo regime, la rete è composta da numerosi cluster finiti di dimensione limitata. La dimensione massima dei cluster cresce al massimo come $\log N$, e non esiste una componente gigante. La rete è frammentata e non connessa.
 
     \item \textbf{Punto critico ($\langle k \rangle = 1$):} In questo punto, la rete subisce una transizione di fase. La dimensione massima dei cluster cresce come $N^{2/3}$, e la suscettività topologica diverge. La rete è ancora frammentata, ma si avvicina alla formazione di una componente gigante.
@@ -137,7 +131,15 @@ come ricavato in \cref{sec:GC}.
     \item \textbf{Regime supercritico ($\langle k \rangle > 1$):} In questo regime, emerge una componente gigante che contiene una frazione finita $S$ dei nodi. I cluster finiti rimanenti hanno dimensione limitata. La rete è connessa a livello macroscopico.
 
     \item \textbf{Regime completamente connesso ($\langle k \rangle > \ln N$):} In questo regime, il numero di aspettazione di nodi isolati è inferiore a 1 \cref{sec:connected_regime}, e la rete è quasi sicuramente completamente connessa.
-\end{itemize}
+\end{enumerate}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{regimes.png}
+    \caption{Rappresentazione schematica dei quattro regimi topologici distinti in funzione del grado medio $\langle k \rangle$. Immagine presa da \cite[Cap. 3.6]{barabasi2016network}.}
+    \label{fig:regimes}
+\end{figure}
+
 \subsection{Transizione di fase}
 Per quantificare la transizione di fase possiamo introdurre due quantità fondamentali:
 \begin{itemize}
