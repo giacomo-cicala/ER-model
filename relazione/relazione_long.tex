@@ -3,10 +3,7 @@
 \usepackage[a4paper, margin=1.97cm]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath}
-\usepackage{caption}
 \usepackage{subcaption}
-\usepackage{amsfonts}
-\usepackage{booktabs}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[
     colorlinks=true,
@@ -112,7 +109,7 @@ Consideriamo il caso in cui $p = 0$: non vi sono link nella rete ed essa è comp
 
 Una domanda interessante da porsi è come avvenga la transizione tra questi due estremi se costruiamo grafi casuali con valori di $p$ gradualmente crescenti, partendo da 0 e finendo a 1. Potremmo intuire, per esempio, che la dimensione della componente più grande aumenti in qualche modo gradualmente con $p$, diventando estensiva solo nel limite in cui $p = 1$. In realtà, la dimensione della componente più grande subisce un cambiamento improvviso, o transizione di fase, da dimensione costante a dimensione estensiva in corrispondenza di un particolare valore speciale di $p$. Una componente della rete la cui dimensione cresce proporzionalmente a $N$ è chiamata componente gigante. La dimensione della componente gigante $S$, definita come la frazione di nodi che vi appartengono, nel limite di Poisson è data dall'equazione trascendente:
 \begin{equation}
-    \quad \boxed{S = 1 - e^{-\langle k \rangle S}}
+    S = 1 - e^{-\langle k \rangle S}
     \label{eq:giant_comp}
 \end{equation}
 e il punto critico di percolazione, ovvero il punto in cui la componente gigante emerge, è dato da
@@ -130,7 +127,7 @@ Possiamo distinguere quattro regimi topologici distinti \cite{barabasi2016networ
 
     \item \textbf{Regime supercritico ($\langle k \rangle > 1$):} In questo regime, emerge una componente gigante che contiene una frazione finita $S$ dei nodi. I cluster finiti rimanenti hanno dimensione limitata. La rete è connessa a livello macroscopico.
 
-    \item \textbf{Regime completamente connesso ($\langle k \rangle > \ln N$):} In questo regime, il numero di aspettazione di nodi isolati è inferiore a 1 \cref{sec:connected_regime}, e la rete è quasi sicuramente completamente connessa.
+    \item \textbf{Regime completamente connesso ($\langle k \rangle > \ln N$):} In questo regime, il numero di aspettazione di nodi isolati è inferiore a 1, e la rete è quasi sicuramente completamente connessa.
 \end{enumerate}
 
 \begin{figure}[htbp]
@@ -141,52 +138,22 @@ Possiamo distinguere quattro regimi topologici distinti \cite{barabasi2016networ
 \end{figure}
 
 \subsection{Transizione di fase}
-Per quantificare la transizione di fase possiamo introdurre due quantità fondamentali:
+Per descrivere la transizione di fase possiamo introdurre due quantità fondamentali:
 \begin{itemize}
-    \item \textbf{Parametro d'ordine $S$:} Definito come la frazione di nodi appartenenti alla componente gigante, permette di distinguere una fase ordinata ($S > 0$) da una disordinata ($S = 0$). Per la teoria della percolazione si ha che \err{REF?}:
+    \item \textbf{Parametro d'ordine $S$:} Definito come la frazione di nodi appartenenti alla componente gigante, permette di distinguere una fase ordinata ($S > 0$) da una disordinata ($S = 0$). Per la teoria della percolazione si ha che \cite{barabasi2016network,stauffer1994introduction}:
           \begin{equation}
               S \sim (\langle k \rangle - \langle k \rangle_c)^\beta \quad\quad \langle k \rangle \to \langle k \rangle_c^+
               \label{eq:order_parameter}
           \end{equation}
           con  $\beta > 0$ esponente critico.
-    \item \textbf{Suscettività $\chi$:} Definita come la dimensione media dei cluster piccoli $ \langle s \rangle$, rappresenta la sensibilità della rete a variazioni di $\langle k \rangle$. Per la teoria della percolazione si ha che \err{REF?}:
-          \begin{equation}    \chi = \langle s \rangle \sim |\langle k \rangle - \langle k \rangle_c|^{-\gamma} \quad\quad \langle k \rangle \to \langle k \rangle_c
+    \item \textbf{Suscettività $\chi$:} Definita come la dimensione media dei cluster piccoli $ \langle s \rangle$, rappresenta la sensibilità della rete a variazioni di $\langle k \rangle$. Per la teoria della percolazione si ha che \cite{barabasi2016network,stauffer1994introduction}:
+          \begin{equation}    \chi \equiv \langle s \rangle \sim |\langle k \rangle - \langle k \rangle_c|^{-\gamma} \quad\quad \langle k \rangle \to \langle k \rangle_c
               \label{eq:susceptibility}
           \end{equation}
           con $\gamma > 0$ esponente critico. Ovvero la dimensione media dei cluster piccoli diverge al punto critico.
 \end{itemize}
-Per quanto riguarda il parametro d'ordine, utilizzando \eqref{eq:giant_comp} possiamo espandere l'esponenziale in serie di Taylor al secondo ordine attorno a $\langle k \rangle_c = 1$ e ottenere \err{REF?}:
-\begin{equation}
-    S \approx 2(\langle k \rangle - 1)
-\end{equation}
-Quindi, vicino al punto critico, il parametro d'ordine cresce linearmente con $\langle k \rangle - 1$, indicando che l'esponente critico $\beta$ è pari a 1:
-\begin{equation}
-    S \sim (\langle k \rangle - 1)^1 \quad\quad \langle k \rangle \to 1^+
-\end{equation}
-\err{Mettere grafico S-K teorico con considerazioni?}
 
-Invece, per quanto riguarda la suscettività, nel regime subcritico la dimensione media delle componenti piccole $ \langle s \rangle$, è data da \cref{sec:small_components}:
-\begin{equation}
-    \langle s \rangle = \frac{\sum_{s} s^2 N_s}{\sum_{s} s N_s}
-\end{equation}
-dove $N_s$ è il numero di cluster di dimensione $s$. Si può dimostrare che $\chi$ è dato da \err{REF?}:
-\begin{equation}
-    \chi = \langle s \rangle = \frac{1}{1 - \langle k \rangle + \langle k \rangle S}
-\end{equation}
-Nel regime subcritico ($\langle k \rangle < 1$) si ha $S = 0$, dunque:
-\begin{equation}
-    \chi = (1- \langle k \rangle)^{-1} \quad\quad \langle k \rangle < 1
-\end{equation}
-Nel regime supercritico ($\langle k \rangle > 1$), sviluppando $S$ in serie di Taylor attorno a $\langle k \rangle_c = 1$ come fatto precedentemente, si ottiene:
-\begin{equation}
-    \chi = (1 + \langle k \rangle)^{-1} \quad\quad  \langle k \rangle \to 1^+
-\end{equation}
-quindi la suscettività diverge al punto critico con un un esponente critico $\gamma = 1$:
-\begin{equation}
-    \chi \sim |\langle k \rangle - 1|^{-1} \quad\quad \langle k \rangle \to 1
-\end{equation}
-
-indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica. Inoltre, la divergenza di $\chi$ al punto critico riflette l'emergere di cluster di tutte le dimensioni secondo una legge a potenza indicando così un'esplosione delle fluttuazioni, caratteristica universale delle transizioni di fase continue.
+Come ricavato in \cref{sec:esponenti}, nell'intorno destro del punto critico $\langle k \rangle_c = 1$ il parametro d'ordine $S$ cresce linearmente, indicando che l'esponente critico è $\beta = 1 $. Inoltre, la suscettività $\chi$ diverge al punto critico con un esponente critico $\gamma = 1$, indicando la presenza di una transizione di fase continua (del secondo ordine) in cui la dimensione media dei cluster finiti cresce senza limiti al punto critico. Questo comportamento è analogo alla divergenza della suscettività nei sistemi termodinamici vicino al punto critico, rafforzando l'analogia tra la percolazione e le transizioni di fase in fisica statistica. Inoltre, la divergenza di $\chi$ al punto critico riflette l'emergere di cluster di tutte le dimensioni secondo una legge a potenza indicando così un'esplosione delle fluttuazioni, caratteristica universale delle transizioni di fase continue.
 
 \section{Percolazione inversa e robustezza}
 Una delle caratteristiche di maggiore interesse per un network è la sua \textbf{robustezza}, ovvero la capacità di mantenere la connettività globale nonostante la rimozione di nodi o link. La teoria della percolazione fornisce un quadro teorico per analizzare questo aspetto attraverso il concetto di \emph{percolazione inversa}, in cui si rimuovono nodi o link in modo casuale o mirato, e si studia come ciò influenzi la dimensione della componente gigante.
@@ -268,7 +235,7 @@ Per quanto riguarda la transizione di fase, è stato creato un ensemble di $M = 
 
 I risultati dei fit e i rispettivi valori teorici sono:
 \begin{equation}
-   \tilde{\chi_\beta}^2 = 4.5 \quad\quad \beta_{\text{fit}} = 0.94 \pm 0.04 \quad\quad \beta_{\text{teo}} = 1
+    \tilde{\chi_\beta}^2 = 4.5 \quad\quad \beta_{\text{fit}} = 0.94 \pm 0.04 \quad\quad \beta_{\text{teo}} = 1
 \end{equation}
 \begin{equation}
     \tilde{\chi_\gamma}^2 = 663 \quad\quad \gamma_{\text{fit}} = 0.997 \pm 0.01 \quad\quad \gamma_{\text{teo}} = 1
@@ -276,7 +243,7 @@ I risultati dei fit e i rispettivi valori teorici sono:
 Nonostante a livello qualitativo i dati simulati mostrino un comportamento coerente con le previsioni teoriche, a livello quantitativo si osservano deviazioni significative dagli esponenti critici teorici. Queste discrepanze potrebbero essere attribuite a diversi fattori, tra cui effetti di finite-size dovuti alla dimensione finita della rete simulata.
 
 \subsection{Percolazione inversa}
-Per quanto riguarda la percolazione inversa, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ per diversi valori di $\langle k \rangle \in [2 , 11]$. Per ogni grafo, è stata rimossa una frazione $f$ di nodi scelti casualmente, e per diversi valori di $f \in [0,1]$ è stata calcolata la dimensione della componente gigante $S$ (normalizzata rispetto alla dimensione originale della componente gigante $S(0)$) mediando su tutti i grafi dell'ensemble, usando come incertezza la deviazione standard (\cref{fig:percolation}). Per ogni valore di $\langle k \rangle$, è stata ricavata la soglia critica di percolazione $f_c$ effettuando dei fit lineari in corrispondenza di tale punto cercando l'intercetta sull'asse x; i valori ottenuti sono poi stati riportati nel grafico (\cref{fig:fc}), nel quale si è eseguito un fit con la distribuzione teorica 
+Per quanto riguarda la percolazione inversa, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ per diversi valori di $\langle k \rangle \in [2 , 11]$. Per ogni grafo, è stata rimossa una frazione $f$ di nodi scelti casualmente, e per diversi valori di $f \in [0,1]$ è stata calcolata la dimensione della componente gigante $S$ (normalizzata rispetto alla dimensione originale della componente gigante $S(0)$) mediando su tutti i grafi dell'ensemble, usando come incertezza la deviazione standard (\cref{fig:percolation}). Per ogni valore di $\langle k \rangle$, è stata ricavata la soglia critica di percolazione $f_c$ effettuando dei fit lineari in corrispondenza di tale punto cercando l'intercetta sull'asse x; i valori ottenuti sono poi stati riportati nel grafico (\cref{fig:fc}), nel quale si è eseguito un fit con la distribuzione teorica
 \begin{equation}
     f_c = 1 - \frac{\alpha}{\langle k \rangle}
 \end{equation}
@@ -295,7 +262,7 @@ dove $\alpha$ è un parametro di fit, per verificarne la coerenza con la teoria.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{tresh.png}
-    \caption{Soglia critica di percolazione $f_c$ in funzione di $\langle k \rangle$ con fit teorico.}
+    \caption{Soglia critica di percolazione $f_c$ in funzione di $\langle k \rangle$ con fit e funzione teorica.}
     \label{fig:fc}
 \end{figure}
 
@@ -339,31 +306,40 @@ La transizione di fase avviene dunque a:
 \begin{equation}
     \langle k \rangle_c = 1
 \end{equation}
-\subsection{Regime completamente connesso}\label{sec:connected_regime}
-Cerchiamo il valore di $\langle k \rangle$ affinché la rete diventi completamente connessa.
-La probabilità che un nodo scelto a caso non abbia link verso la componente gigante è $(1-p)^N$.
-Sfruttando l'approssimazione $(1-x/n)^n \approx e^{-x}$, il numero atteso di nodi isolati $I_N$ è:
+
+\subsection{Esponenti critici} \label{sec:esponenti}
+Per quanto riguarda il parametro d'ordine, utilizzando \eqref{eq:giant_comp} possiamo espandere l'esponenziale in serie di Taylor al secondo ordine attorno a $\langle k \rangle_c = 1$ e ottenere:
 \begin{equation}
-    I_N = N(1-p)^N \approx N e^{-pN} = N e^{-\langle k \rangle}
+    S \approx 2(\langle k \rangle - 1)
+    \label{eq:S_approx}
 \end{equation}
-La condizione di connettività completa si raggiunge quando rimane al massimo un solo nodo isolato nel sistema ($I_N = 1$). Risolvendo l'equazione:
+Quindi, vicino al punto critico, il parametro d'ordine cresce linearmente con $\langle k \rangle - 1$, indicando che l'esponente critico $\beta$ è pari a 1:
 \begin{equation}
-    1 = N e^{-\langle k \rangle} \quad \Longrightarrow \quad \langle k \rangle = \ln N
+    S \sim (\langle k \rangle - 1)^1 \quad\quad \langle k \rangle \to 1^+
+\end{equation}
+Invece, per quanto riguarda la suscettività, si calcola che la dimensione media delle componenti piccole $ \langle s \rangle$, è data da \cite{newman2018networks}:
+\begin{equation}
+    \chi \equiv \langle s \rangle = \frac{1}{1 - \langle k \rangle + \langle k \rangle S}
+    \label{eq:susceptibility_final}
+\end{equation}
+Nel regime subcritico ($\langle k \rangle < 1$) si ha $S = 0$, dunque:
+\begin{equation}
+    \chi = (1- \langle k \rangle)^{-1} \quad\quad \langle k \rangle < 1
+\end{equation}
+Nel regime supercritico ($\langle k \rangle > 1$), sostituendo \eqref{eq:S_approx} in \eqref{eq:susceptibility_final}, si ottiene:
+\begin{equation}
+    \chi = \frac{1}{1 - \langle k \rangle + 2(\langle k^2 \rangle - \langle k \rangle)} \quad\quad  \langle k \rangle \to 1^+
+\end{equation}
+scrivendo $\langle k \rangle = 1 + \epsilon$ con $\epsilon \to 0^+$, tenendo solo il termine lineare in $\epsilon$, si ottiene:
+\begin{equation}
+    \chi \approx \frac{1}{- \epsilon + 2\epsilon} = \frac{1}{\epsilon} = ( \langle k \rangle - 1)^{-1} \quad\quad  \langle k \rangle \to 1^+
+\end{equation}
+quindi la suscettività diverge al punto critico con un un esponente critico $\gamma = 1$:
+\begin{equation}
+    \chi \sim |\langle k \rangle - 1|^{-1} \quad\quad \langle k \rangle \to 1
 \end{equation}
 
-\subsection{Dimensione media delle componenti piccole} \label{sec:small_components}
-Sia $N_s$ il numero di cluster di dimensione $s$ presenti nella rete. La probabilità $\pi_s$ che un nodo scelto a caso appartenga a un cluster di dimensione $s$ è:
-\begin{equation}
-    \pi_s = \frac{\text{nodi in cluster di taglia } s}{\text{nodi totali}} = \frac{s \cdot N_s}{\sum_{k} k \cdot N_k}
-\end{equation}
-La dimensione media $\langle s \rangle_{w}$ è quindi il valore atteso della dimensione calcolato su questa distribuzione di probabilità:
-
-\begin{equation}
-    \chi = \sum_{s} s \cdot \pi_s = \sum_{s} s \cdot \left( \frac{s N_s}{\sum_{k} k N_k} \right) = \frac{\sum_{s} s^2 N_s}{\sum_{s} s N_s}
-\end{equation}
 
 \printbibliography[heading=bibintoc, title={Bibliografia}]
-
-\err{AGGIUSTA BIBLIO (pagine si/no?), ecc}
 
 \end{document}
