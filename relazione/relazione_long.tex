@@ -13,7 +13,7 @@
 ]{hyperref}
 \usepackage{cleveref}
 \usepackage{csquotes}
-\usepackage[style=phys, backend=biber, biblabel=brackets]{biblatex}
+\usepackage[backend=biber,style=numeric, sorting=none]{biblatex}
 
 \graphicspath{{./images/}}
 \addbibresource{bibliografia.bib}
@@ -45,22 +45,22 @@
 Negli ultimi decenni, lo studio dei sistemi complessi ha subito una profonda accelerazione grazie allo sviluppo della \emph{Network Science}, un framework teorico che permette di descrivere sistemi apparentemente disparati, dalle reti metaboliche nella cellula, alle infrastrutture tecnologiche come Internet, fino alle reti sociali, attraverso un linguaggio matematico unificato.
 Una delle questioni centrali in questo ambito riguarda l'emergere spontaneo di proprietà macroscopiche a partire da interazioni locali disordinate. In particolare, è fondamentale comprendere i meccanismi che garantiscono la connettività globale del sistema e, di riflesso, la sua \emph{robustezza} a fronte di fallimenti casuali dei componenti (\emph{random failures}).
 
-Il presente elaborato si propone di analizzare la stabilità strutturale delle reti attraverso lo studio della \emph{teoria della percolazione}, applicata al modello di grafi casuali di Erdős-Rényi $G(N, p)$.
+Il presente elaborato si propone di analizzare la stabilità strutturale delle reti attraverso lo studio della \emph{teoria della percolazione}, applicata al modello di grafi casuali di Erdős-Rényi-Gilbert (ERG) $G(N, p)$.
 Come discusso da Newman \cite{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto da isole disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che connette l'intero sistema.
 
 Sebbene le reti reali presentino spesso correlazioni complesse, il modello di Erdős-Rényi-Gilbert costituisce il "modello nullo" di riferimento, analogo al gas ideale in termodinamica.
 
 \subsection{Obiettivi del lavoro}
 Lo scopo centrale di questo elaborato è lo studio della \emph{teoria della percolazione} come chiave di lettura per comprendere le transizioni di fase e la resilienza nelle reti complesse.
-Utilizzando il modello di Erdős-Rényi-Gilbert come sistema di riferimento analitico, il lavoro si prefigge i seguenti obiettivi:
+Utilizzando il modello di ERG come sistema di riferimento analitico, il lavoro si prefigge i seguenti obiettivi:
 
 \begin{itemize}
-    \item \textbf{Analisi teorica e computazionale dei fenomeni critici:} Studio della transizione di fase continua che porta all'emersione dell'ordine macroscopico (la \emph{componente gigante}). Dal punto di vista analitico, si ricaverà la soglia critica $\langle k \rangle_c = 1$ e si studierà il comportamento asintotico del parametro d'ordine $S$ e della suscettività topologica $\chi$. Computazionalmente, si verificheranno le leggi di \emph{scaling} universali tramite simulazioni numeriche su \emph{ensemble} di grafi, estraendo gli esponenti critici $\beta$ e $\gamma$ mediante \emph{fit}.
+    \item \textbf{Analisi teorica e computazionale dei fenomeni critici:} Studio della transizione di fase continua che porta all'emersione dell'ordine macroscopico (la \emph{componente gigante}). Dal punto di vista analitico, si ricaverà la soglia critica $\langle k \rangle_c = 1$ e si studierà il comportamento asintotico del parametro d'ordine $S$ e della suscettività $\chi$. Computazionalmente, si verificheranno le leggi di \emph{scaling} universali tramite simulazioni numeriche su \emph{ensemble} di grafi, estraendo gli esponenti critici $\beta$ e $\gamma$ mediante \emph{fit}.
 
     \item \textbf{Percolazione inversa e robustezza:} Valutazione teorica e numerica della stabilità del \emph{network} a fronte di fallimenti casuali (\emph{random failures}). Teoricamente, si ricaverà la frazione critica di nodi rimossi $f_c = 1 - 1/\langle k \rangle$ necessaria per causare il collasso funzionale del sistema. Questo processo verrà riprodotto computazionalmente, allo scopo di estrarre empiricamente le soglie di percolazione al variare della connettività iniziale e verificare tramite fit la validità della legge teorica.
 \end{itemize}
 \section{Elementi di teoria dei grafi}
-Prima di addentrarci nell'analisi del modello di Erdős-Rényi-Gilbert, è necessario introdurre alcuni concetti fondamentali della teoria dei grafi \cite{barabasi2016network}. Un grafo $G$ è costituito da un insieme di nodi e un insieme di link che connettono coppie di nodi, rappresentando un'interazione tra di essi. La dimensione del grafo è data dal numero di nodi $N$, mentre la connettività è data dal numero totale di link $L$.
+Prima di addentrarci nell'analisi del modello di ERG, è necessario introdurre alcuni concetti fondamentali della teoria dei grafi \cite{barabasi2016network}. Un grafo $G$ è costituito da un insieme di nodi e un insieme di link che connettono coppie di nodi, rappresentando un'interazione tra di essi. La dimensione del grafo è data dal numero di nodi $N$, mentre la connettività è data dal numero totale di link $L$.
 Una proprietà fondamentale di ciascun nodo è il suo grado $k$, che rappresenta il numero di link che esso possiede verso altri nodi.
 In un grafo non orientato, il numero totale di link $L$, può essere espresso come:
 \begin{equation}
@@ -81,7 +81,7 @@ Per una rete con $N$ nodi, la distribuzione dei gradi è data da:
 \end{equation}
 dove $N_k$ è il numero di nodi di grado $k$.
 \section{Modello di Erdős-Rényi-Gilbert}
-Il modello di Erdős-Rényi-Gilbert \cite{newman2018networks}, denotato come $G(N, p)$, è un modello di grafo casuale in cui ogni coppia di $N$ nodi è connessa da un link con probabilità $p$.
+Il modello di ERG \cite{newman2018networks}, denotato come $G(N, p)$, è un modello di grafo casuale in cui ogni coppia di $N$ nodi è connessa da un link con probabilità $p$.
 In questo modello, il numero totale di link $L$ è una variabile casuale che segue una distribuzione binomiale
 \begin{equation}
     P(L) = \binom{\binom{N}{2}}{L} p^L (1-p)^{\binom{N}{2} - L}
@@ -105,7 +105,7 @@ In molti casi siamo interessati a grandi network con grado medio finito $\langle
 
 \section{Transizione di fase di percolazione}
 \subsection{Emergenza della componente gigante}
-Consideriamo il caso in cui $p = 0$: non vi sono link nella rete ed essa è completamente sconnessa. Nel limite opposto, quando $p = 1$, ogni vertice è connesso direttamente a tutti gli altri, creando un'unica componente che copre l'intera rete. Concentriamoci ora sulla dimensione della componente più grande della rete in ciascuno di questi casi: nel primo caso ($p = 0$) la componente più grande ha dimensione 1, el secondo ($p = 1$) la componente più grande ha dimensione $N$ (ovvero è estensiva). \ext{ In molte applicazioni delle reti è cruciale che esista una componente che riempia la gran parte della rete. Per esempio, nel caso di Internet, è importante che vi sia un cammino attraverso la rete che colleghi la maggior parte dei computer alla maggior parte degli altri. Se così non fosse, la rete non sarebbe in grado di svolgere la sua funzione prevista di garantire le comunicazioni computer-computer per i suoi utenti}.
+Consideriamo il caso in cui $p = 0$: non vi sono link nella rete ed essa è completamente sconnessa. Nel limite opposto, quando $p = 1$, ogni vertice è connesso direttamente a tutti gli altri, creando un'unica componente che copre l'intera rete. Concentriamoci ora sulla dimensione della componente più grande della rete in ciascuno di questi casi: nel primo caso ($p = 0$) la componente più grande ha dimensione 1, nel secondo ($p = 1$) la componente più grande ha dimensione $N$ (ovvero è estensiva).
 
 Una domanda interessante da porsi è come avvenga la transizione tra questi due estremi se costruiamo grafi casuali con valori di $p$ gradualmente crescenti, partendo da 0 e finendo a 1. Potremmo intuire, per esempio, che la dimensione della componente più grande aumenti in qualche modo gradualmente con $p$, diventando estensiva solo nel limite in cui $p = 1$. In realtà, la dimensione della componente più grande subisce un cambiamento improvviso, o transizione di fase, da dimensione costante a dimensione estensiva in corrispondenza di un particolare valore speciale di $p$. Una componente della rete la cui dimensione cresce proporzionalmente a $N$ è chiamata componente gigante. La dimensione della componente gigante $S$, definita come la frazione di nodi che vi appartengono, nel limite di Poisson è data dall'equazione trascendente:
 \begin{equation}
@@ -118,7 +118,7 @@ e il punto critico di percolazione, ovvero il punto in cui la componente gigante
 \end{equation}
 come ricavato in \cref{sec:GC}.
 
-Possiamo distinguere quattro regimi topologici distinti \cite{barabasi2016network} \cref{fig:regimes} in funzione del grado medio $\langle k \rangle$:
+Possiamo distinguere quattro regimi topologici distinti \cite{barabasi2016network} (\cref{fig:regimes})in funzione del grado medio $\langle k \rangle$:
 \begin{enumerate}
     \renewcommand{\labelenumi}{\alph{enumi}.}
     \item \textbf{Regime subcritico ($\langle k \rangle < 1$):} In questo regime, la rete è composta da numerosi cluster finiti di dimensione limitata. La dimensione massima dei cluster cresce al massimo come $\log N$, e non esiste una componente gigante. La rete è frammentata e non connessa.
@@ -158,34 +158,30 @@ Come ricavato in \cref{sec:esponenti}, nell'intorno destro del punto critico $\l
 \section{Percolazione inversa e robustezza}
 Una delle caratteristiche di maggiore interesse per un network è la sua \textbf{robustezza}, ovvero la capacità di mantenere la connettività globale nonostante la rimozione di nodi o link. La teoria della percolazione fornisce un quadro teorico per analizzare questo aspetto attraverso il concetto di \emph{percolazione inversa}, in cui si rimuovono nodi o link in modo casuale o mirato, e si studia come ciò influenzi la dimensione della componente gigante.
 
-Analizziamo il caso della rimozione casuale di una frazione $f$ di nodi. Utilizzando il criterio di Molloy-Reed \err{REF?}:
+Analizziamo il caso della rimozione casuale di una frazione $f$ di nodi. Utilizzando il criterio di Molloy-Reed \cite{barabasi2016network}:
 \begin{equation}
     \frac{\langle k^2 \rangle}{\langle k \rangle} > 2
 \end{equation}
-il quale determina la condizione necessaria affinchè esista una componente gigante per un generico network con distribuzione dei gradi $P(k)$, è possibile derivare la soglia critica di percolazione $f_c$ \err{REF?}:
-\begin{equation}
+il quale determina la condizione necessaria affinché esista una componente gigante per un generico network con distribuzione dei gradi $P(k)$, è possibile derivare la soglia critica di percolazione $f_c$ \cite{barabasi2016network}:
+\begin{equation} \label{eq:perc_tresh}
     f_c = 1 - \frac{1}{\frac{\langle k^2 \rangle}{\langle k \rangle} - 1}
 \end{equation}
-oltre la quale la rete collassa e perde la componente gigante. Nel caso del modello di Erdős-Rényi-Gilbert, dove $\langle k^2 \rangle = \langle k \rangle^2 + \langle k \rangle$ \err{REF?}, la soglia critica di percolazione è:
+oltre la quale la rete collassa e perde la componente gigante. Nel caso del modello di ERG, la distribuzione dei gradi è di Poisson, per cui il secondo momento della distribuzione dei gradi è dato da:
+\begin{equation} \label{eq:second_moment}
+    \langle k^2 \rangle = \langle k \rangle^2 + \langle k \rangle
+\end{equation}
+Sostituendo \eqref{eq:second_moment} in  \eqref{eq:perc_tresh}, si ottiene che la soglia critica di percolazione è:
 \begin{equation}
     f_c = 1 - \frac{1}{\langle k \rangle}
 \end{equation}
-Questo risultato mostra che la robustezza di questo network dipende unicamente dal grado medio $\langle k \rangle$: reti con grado medio più elevato sono più robuste alla rimozione casuale di nodi, poiché la soglia critica $f_c$ è più alta. Tuttavia, è sufficiente rimuovere una frazione $f_c < f < 1$ di nodi per far collassare la rete, evidenziando la vulnerabilità intrinseca del modello di Erdős-Rényi-Gilbert a fallimenti casuali.
-
-As we
-approach the percolation transition from above the network may be “functional” in
-the sense of having a giant cluster, but the functional portion of the network is vanishingly small. Thus one could argue that it is misleading to interpret the percolation threshold
-as the point where the network stops functioning: in effect most of it has stopped functioning
-before we reach this point. To fully describe the functional state of the network one should specify
-not only whether it contains a giant cluster but also what the size of that cluster is.
-
-\ext{Questo comportamento è in contrasto con reti con distribuzioni dei gradi più eterogenee (come le reti scale-free), che possono essere molto più robuste a fallimenti casuali ma estremamente vulnerabili a attacchi mirati contro i nodi più connessi \cite[Cap. 8]{barabasi2016network}}.
+Questo risultato mostra che la robustezza di questo network dipende unicamente dal grado medio $\langle k \rangle$: reti con grado medio più elevato sono più robuste alla rimozione casuale di nodi, poiché la soglia critica $f_c$ è più alta. Tuttavia, è sufficiente rimuovere una frazione $f_c < f < 1$ di nodi per far collassare la rete, evidenziando la vulnerabilità intrinseca del modello di ERG a fallimenti casuali.
+\ext{Questo comportamento è in contrasto con reti con distribuzioni dei gradi più eterogenee (come le reti scale-free), che possono essere molto più robuste a fallimenti casuali \cite{barabasi2016network}}.
 
 \section{Simulazione e risultati}
-Per verificare le previsioni teoriche, sono state condotte simulazioni numeriche in Python utilizzando la libreria \emph{igraph}.
+Per verificare le previsioni teoriche, sono state condotte simulazioni numeriche in Python utilizzando la libreria \emph{igraph}. Il codice sviluppato per la simulazione è disponibile online nella relativa repository su GitHub \cite{codice}.
 
 \subsection{Transizione di fase}
-Per quanto riguarda la transizione di fase, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ nodi diversi valori di $\langle k \rangle \in [0, 5]$ . Per ogni grafo, è stata calcolata la dimensione della componente gigante $S$  (\cref{fig:S}) e la suscettività $\chi$  (\cref{fig:chi}): per ciascun valore di $\langle k \rangle$, è stato associato un valore medio di $S$ e $\chi$ calcolato sull'insieme di grafi, con incertezza data dalla deviazione standard. Per ottenere un'analisi quantitativa, si sono eseguiti fit dei dati simulati con le leggi di potenza previste dalla teoria della percolazione \eqref{eq:order_parameter} \eqref{eq:susceptibility}, al fine di estrarre gli esponenti critici $\beta$ e $\gamma$ e confrontarli con i valori teorici.
+Per quanto riguarda la transizione di fase, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ nodi per diversi valori di $\langle k \rangle \in [0, 5]$ . Per ogni grafo, è stata calcolata la dimensione della componente gigante $S$  (\cref{fig:S}) e la suscettività $\chi$  (\cref{fig:chi}): per ciascun valore di $\langle k \rangle$ è stato associato un valore medio di $S$ e $\chi$ calcolato sull'ensemble di grafi, con incertezza data dalla deviazione standard. Per ottenere un'analisi quantitativa, si sono eseguiti fit dei dati simulati con le leggi di potenza previste dalla teoria della percolazione \eqref{eq:order_parameter} \eqref{eq:susceptibility}, al fine di estrarre gli esponenti critici $\beta$ e $\gamma$ e confrontarli con i valori teorici.
 
 \begin{figure}[htbp]
     \centering
@@ -229,28 +225,28 @@ Per quanto riguarda la transizione di fase, è stato creato un ensemble di $M = 
 
         \end{minipage}
     }
-    \caption{A sinistra (a) la suscettività $\chi$ in funzione di $\langle k \rangle$. A destra (b) il fit dei dati effettuato nel range $\langle k \rangle \in [0. , 0.95] \cup [1.05, 2]$.}
+    \caption{A sinistra (a) la suscettività $\chi$ in funzione di $\langle k \rangle$. A destra (b) il fit dei dati effettuato nel range $\langle k \rangle \in [0 , 0.95] \cup [1.05, 2]$.}
     \label{fig:chi}
 \end{figure}
 
 I risultati dei fit e i rispettivi valori teorici sono:
-\begin{equation}
+\begin{equation*}
     \tilde{\chi_\beta}^2 = 4.5 \quad\quad \beta_{\text{fit}} = 0.94 \pm 0.04 \quad\quad \beta_{\text{teo}} = 1
-\end{equation}
-\begin{equation}
-    \tilde{\chi_\gamma}^2 = 663 \quad\quad \gamma_{\text{fit}} = 0.997 \pm 0.01 \quad\quad \gamma_{\text{teo}} = 1
-\end{equation}
+\end{equation*}
+\begin{equation*}
+    \tilde{\chi_\gamma}^2 = 663 \quad\quad \gamma_{\text{fit}} = 0.997 \pm 0.001 \quad\quad \gamma_{\text{teo}} = 1
+\end{equation*}
 Nonostante a livello qualitativo i dati simulati mostrino un comportamento coerente con le previsioni teoriche, a livello quantitativo si osservano deviazioni significative dagli esponenti critici teorici. Queste discrepanze potrebbero essere attribuite a diversi fattori, tra cui effetti di finite-size dovuti alla dimensione finita della rete simulata.
 
 \subsection{Percolazione inversa}
-Per quanto riguarda la percolazione inversa, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ per diversi valori di $\langle k \rangle \in [2 , 11]$. Per ogni grafo, è stata rimossa una frazione $f$ di nodi scelti casualmente, e per diversi valori di $f \in [0,1]$ è stata calcolata la dimensione della componente gigante $S$ (normalizzata rispetto alla dimensione originale della componente gigante $S(0)$) mediando su tutti i grafi dell'ensemble, usando come incertezza la deviazione standard (\cref{fig:percolation}). Per ogni valore di $\langle k \rangle$, è stata ricavata la soglia critica di percolazione $f_c$ effettuando dei fit lineari in corrispondenza di tale punto cercando l'intercetta sull'asse x; i valori ottenuti sono poi stati riportati nel grafico (\cref{fig:fc}), nel quale si è eseguito un fit con la distribuzione teorica
+Per quanto riguarda la percolazione inversa, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ per diversi valori di $\langle k \rangle \in [2 , 11]$. Per ogni grafo, è stata rimossa una frazione $f$ di nodi scelti casualmente, e per diversi valori di $f \in [0,1]$ è stata calcolata la dimensione della componente gigante $S$ (normalizzata rispetto alla dimensione originale della componente gigante $S(0)$) mediando su tutti i grafi dell'ensemble, usando come incertezza la deviazione standard (\cref{fig:percolation}). Per ogni valore di $\langle k \rangle$, è stata ricavata la soglia critica di percolazione $f_c$ effettuando un fit lineare in corrispondenza di tale punto cercando l'intercetta sull'asse x; i valori ottenuti sono poi stati riportati nel grafico (\cref{fig:fc}), nel quale si è eseguito un fit con la distribuzione teorica
 \begin{equation}
     f_c = 1 - \frac{\alpha}{\langle k \rangle}
 \end{equation}
 dove $\alpha$ è un parametro di fit, per verificarne la coerenza con la teoria. Il risultato del fit e il rispettivo valore teorico sono:
-\begin{equation}
+\begin{equation*}
     \tilde{\chi} = 55 \quad\quad \alpha_{\text{fit}} = 0.985 \pm 0.001 \quad\quad \alpha_{\text{teo}} = 1
-\end{equation}
+\end{equation*}
 
 \begin{figure}[htbp]
     \centering
@@ -268,8 +264,13 @@ dove $\alpha$ è un parametro di fit, per verificarne la coerenza con la teoria.
 
 Anche in questo caso, nonostante a livello qualitativo i dati simulati mostrino un comportamento coerente con le previsioni teoriche, a livello quantitativo si osservano deviazioni significative dal valore teorico di $\alpha$ e un $\tilde{\chi}^2$ alto causato plausibilmente dalle basse incertezze statistiche e dalle deviazioni sistematiche di $f_c$ per $\langle k \rangle > 6$ causate da effetti di finite-size.
 
-
 \section{Conclusioni}
+In questo elaborato sono state analizzate la transizione di fase di percolazione e la robustezza strutturale nel modello di reti casuali di ERG. 
+
+L'analisi teorica ha permesso di individuare la soglia critica $\langle k \rangle_c = 1$ per l'emergenza della componente gigante e di ricavare gli esponenti critici di campo medio $\beta = 1$ e $\gamma = 1$. Le simulazioni numeriche su \emph{ensemble} di grafi ($N = 10^5$ , M = 20) hanno confermato parzialmente tali previsioni: i fit asintotici per il parametro d'ordine $S$ e la suscettività $\chi$ hanno restituito esponenti $\beta_{\text{fit}} = 0.94 \pm 0.04$ e $\gamma_{\text{fit}} = 0.997 \pm 0.001$.. Le discrepanze quantitative osservate, evidenziate dagli elevati valori del $\tilde{\chi}^2$, possono essere giustificate dagli effetti di \emph{finite-size}, che introducono un arrotondamento della singolarità al punto critico per via della taglia finita della rete.
+
+Infine, lo studio della percolazione inversa ha confermato la relazione funzionale della soglia critica rispetto al grado medio. Il fit ha restituito un parametro $\alpha_{\text{fit}} = 0.985 \pm 0.001$, validando approssimativamente la legge teorica $f_c = 1 - 1/\langle k \rangle$. Questo risultato quantifica la stabilità del \emph{network}, dimostrando che la robustezza delle reti poissoniane dipende esclusivamente dalla connettività media $\langle k \rangle$ e confermandone l'elevata vulnerabilità in caso di fallimenti casuali.
+
 \appendix
 \section{Appendici}
 \subsection{Componente Gigante}\label{sec:GC}
@@ -328,13 +329,13 @@ Nel regime subcritico ($\langle k \rangle < 1$) si ha $S = 0$, dunque:
 \end{equation}
 Nel regime supercritico ($\langle k \rangle > 1$), sostituendo \eqref{eq:S_approx} in \eqref{eq:susceptibility_final}, si ottiene:
 \begin{equation}
-    \chi = \frac{1}{1 - \langle k \rangle + 2(\langle k^2 \rangle - \langle k \rangle)} \quad\quad  \langle k \rangle \to 1^+
+    \chi = \frac{1}{1 - \langle k \rangle + 2(\langle k \rangle^2 - \langle k \rangle)} \quad\quad  \langle k \rangle \to 1^+
 \end{equation}
 scrivendo $\langle k \rangle = 1 + \epsilon$ con $\epsilon \to 0^+$, tenendo solo il termine lineare in $\epsilon$, si ottiene:
 \begin{equation}
     \chi \approx \frac{1}{- \epsilon + 2\epsilon} = \frac{1}{\epsilon} = ( \langle k \rangle - 1)^{-1} \quad\quad  \langle k \rangle \to 1^+
 \end{equation}
-quindi la suscettività diverge al punto critico con un un esponente critico $\gamma = 1$:
+quindi la suscettività diverge al punto critico con un esponente critico $\gamma = 1$:
 \begin{equation}
     \chi \sim |\langle k \rangle - 1|^{-1} \quad\quad \langle k \rangle \to 1
 \end{equation}
