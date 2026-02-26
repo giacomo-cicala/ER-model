@@ -23,7 +23,7 @@ ER-model/
 │   ├── relazione.tex
 │   ├── bibliografia.bib
 │   └── images/         # Grafici prodotti dalle simulazioni
-├── presentazione/      # Presentazione in LaTeX (beamer)
+├── presentazione/      # Presentazione in LaTeX 
 │   └── presentazione.tex
 └── simulazione/        # Notebook Jupyter con le simulazioni numeriche
     ├── teo_graphs.ipynb        # Analisi teorica del modello ERG
@@ -31,56 +31,3 @@ ER-model/
     ├── percolation.ipynb       # Percolazione inversa e robustezza
     └── percolation_UF.ipynb    # Percolazione con algoritmo Union-Find
 ```
-
----
-
-## Dipendenze
-
-Le simulazioni sono scritte in **Python 3** e richiedono le seguenti librerie:
-
-- [igraph](https://igraph.org/python/) — generazione e analisi di grafi
-- [NumPy](https://numpy.org/) — calcolo numerico
-- [SciPy](https://scipy.org/) — fit e analisi statistica
-- [Matplotlib](https://matplotlib.org/) — visualizzazione dei risultati
-
-Installazione rapida:
-
-```bash
-pip install python-igraph numpy scipy matplotlib
-```
-
----
-
-## Utilizzo
-
-Aprire i notebook nella cartella `simulazione/` con Jupyter:
-
-```bash
-jupyter notebook simulazione/
-```
-
-I notebook sono indipendenti e possono essere eseguiti in qualsiasi ordine.
-
----
-
-## Risultati
-
-| Quantità | Valore teorico | Valore ottenuto dal fit |
-|---|---|---|
-| Esponente critico $\beta$ | $1$ | $0.94 \pm 0.04$ |
-| Esponente critico $\gamma$ | $1$ | $0.997 \pm 0.001$ |
-| Parametro robustezza $\alpha$ | $1$ | $0.985 \pm 0.001$ |
-
----
-
-## Riferimenti
-
-- M. E. J. Newman, *Networks*, Oxford University Press, 2018.
-- A.-L. Barabási, *Network Science*, Cambridge University Press, 2016.
-- D. Stauffer & A. Aharony, *Introduction to Percolation Theory*, Taylor & Francis, 1994.
-
----
-
-## Autore
-
-**Giacomo Cicala**
