@@ -2,6 +2,7 @@
 \usepackage[italian]{babel}
 \usepackage[a4paper, margin=1.97cm]{geometry}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{amsmath}
 \usepackage{subcaption}
 \usepackage[dvipsnames]{xcolor}
@@ -49,9 +50,9 @@ Lo studio dei sistemi complessi ha ricevuto un grande contributo dallo sviluppo 
 In questo ambito, uno dei pricipali obiettivi è lo studio dell'emersione spontanea di proprietà macroscopiche a partire da interazioni locali. In particolare, risulta interessante e utile comprendere i meccanismi che garantiscono la connettività globale del sistema e, di riflesso, la sua \emph{robustezza} a fronte di fallimenti casuali dei componenti (\emph{random failures}).
 
 In questo elaborato verrà analizzata la connettività e la robustezza delle reti attraverso lo studio della \emph{teoria della percolazione}, applicata al modello di grafi casuali di Erdős-Rényi-Gilbert (ERG) $G(N, p)$.
-Come discusso da Newman \cite{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto da isole disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che connette l'intero sistema.
+Come discusso da Newman \cite{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto piccole componenti disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che connette l'intero sistema.
 
-Sebbene le reti reali presentino spesso correlazioni complesse, il modello di Erdős-Rényi-Gilbert costituisce il "modello nullo" di riferimento, analogo al gas ideale in termodinamica.
+Sebbene le reti reali presentino spesso correlazioni complesse, il modello di Erdős-Rényi-Gilbert costituisce il "modello nullo" di riferimento analogo al gas ideale in termodinamica, per cui il suo studio risulta rilevante.
 
 \subsection{Obiettivi del lavoro}
 Utilizzando il modello di ERG come sistema di riferimento analitico, il lavoro si prefigge i seguenti obiettivi:
@@ -133,7 +134,7 @@ Possiamo distinguere quattro regimi topologici distinti \cite{barabasi2016networ
     \item \textbf{Regime completamente connesso ($\langle k \rangle > \ln N$):} In questo regime, il numero di aspettazione di nodi isolati è inferiore a 1, e la rete è quasi sicuramente completamente connessa.
 \end{enumerate}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{regimes.png}
     \caption{Rappresentazione schematica dei quattro regimi topologici distinti in funzione del grado medio $\langle k \rangle$. Immagine presa da \cite[Cap. 3.6]{barabasi2016network}.}
@@ -178,7 +179,6 @@ Sostituendo \eqref{eq:second_moment} in  \eqref{eq:perc_tresh}, si ottiene che l
     f_c = 1 - \frac{1}{\langle k \rangle}
 \end{equation}
 Questo risultato mostra che la robustezza di questo network dipende unicamente dal grado medio $\langle k \rangle$: reti con grado medio più elevato sono più robuste alla rimozione casuale di nodi, poiché la soglia critica $f_c$ è più alta. Tuttavia, è sufficiente rimuovere una frazione $f_c < f < 1$ di nodi per far collassare la rete, evidenziando la vulnerabilità intrinseca del modello di ERG a fallimenti casuali.
-\ext{Questo comportamento è in contrasto con reti con distribuzioni dei gradi più eterogenee (come le reti scale-free), che possono essere molto più robuste a fallimenti casuali \cite{barabasi2016network}}.
 
 \section{Simulazione e risultati}
 Per verificare le previsioni teoriche, sono state condotte simulazioni numeriche in Python utilizzando la libreria \emph{igraph}. Il codice sviluppato per la simulazione è disponibile online nella relativa repository su GitHub \cite{codice}.
