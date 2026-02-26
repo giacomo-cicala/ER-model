@@ -23,9 +23,12 @@
 {\mkpageprefix[pagination]{#1}}}
 \DeclareFieldFormat{cite}{\hyperref{\mkbibbrackets{#1}}}
 
+
 \crefformat{equation}{#2(#1)#3}
 \crefformat{appendix}{#2(#1)#3}
 \crefname{table}{tab.}{tab.}
+\crefformat{figure}{#2\textcolor{blue}{(fig.#1)}#3}
+\Crefformat{figure}{#2\textcolor{blue}{(Fig.#1)}#3}
 
 \renewcommand{\mkbibbrackets}[1]{\textcolor{blue}{[#1]}}
 \newcommand{\err}[1]{\textcolor{red}{#1}}
@@ -42,23 +45,23 @@
 \renewcommand{\abstractname}{Abstract}
 
 \section{Introduzione}
-Negli ultimi decenni, lo studio dei sistemi complessi ha subito una profonda accelerazione grazie allo sviluppo della \emph{Network Science}, un framework teorico che permette di descrivere sistemi apparentemente disparati, dalle reti metaboliche nella cellula, alle infrastrutture tecnologiche come Internet, fino alle reti sociali, attraverso un linguaggio matematico unificato.
-Una delle questioni centrali in questo ambito riguarda l'emergere spontaneo di proprietà macroscopiche a partire da interazioni locali disordinate. In particolare, è fondamentale comprendere i meccanismi che garantiscono la connettività globale del sistema e, di riflesso, la sua \emph{robustezza} a fronte di fallimenti casuali dei componenti (\emph{random failures}).
+Lo studio dei sistemi complessi ha ricevuto un grande contributo dallo sviluppo della\emph{Network Science}, grazie alla quale è possibile descrivere sistemi apparentemente disparati, dalle reti metaboliche nella cellula, alle infrastrutture tecnologiche come Internet, fino alle reti sociali, attraverso un linguaggio matematico comune.
+In questo ambito, uno dei pricipali obiettivi è lo studio dell'emersione spontanea di proprietà macroscopiche a partire da interazioni locali. In particolare, risulta interessante e utile comprendere i meccanismi che garantiscono la connettività globale del sistema e, di riflesso, la sua \emph{robustezza} a fronte di fallimenti casuali dei componenti (\emph{random failures}).
 
-Il presente elaborato si propone di analizzare la stabilità strutturale delle reti attraverso lo studio della \emph{teoria della percolazione}, applicata al modello di grafi casuali di Erdős-Rényi-Gilbert (ERG) $G(N, p)$.
+In questo elaborato verrà analizzata la connettività e la robustezza delle reti attraverso lo studio della \emph{teoria della percolazione}, applicata al modello di grafi casuali di Erdős-Rényi-Gilbert (ERG) $G(N, p)$.
 Come discusso da Newman \cite{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto da isole disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che connette l'intero sistema.
 
 Sebbene le reti reali presentino spesso correlazioni complesse, il modello di Erdős-Rényi-Gilbert costituisce il "modello nullo" di riferimento, analogo al gas ideale in termodinamica.
 
 \subsection{Obiettivi del lavoro}
-Lo scopo centrale di questo elaborato è lo studio della \emph{teoria della percolazione} come chiave di lettura per comprendere le transizioni di fase e la resilienza nelle reti complesse.
 Utilizzando il modello di ERG come sistema di riferimento analitico, il lavoro si prefigge i seguenti obiettivi:
 
 \begin{itemize}
     \item \textbf{Analisi teorica e computazionale dei fenomeni critici:} Studio della transizione di fase continua che porta all'emersione dell'ordine macroscopico (la \emph{componente gigante}). Dal punto di vista analitico, si ricaverà la soglia critica $\langle k \rangle_c = 1$ e si studierà il comportamento asintotico del parametro d'ordine $S$ e della suscettività $\chi$. Computazionalmente, si verificheranno le leggi di \emph{scaling} universali tramite simulazioni numeriche su \emph{ensemble} di grafi, estraendo gli esponenti critici $\beta$ e $\gamma$ mediante \emph{fit}.
 
-    \item \textbf{Percolazione inversa e robustezza:} Valutazione teorica e numerica della stabilità del \emph{network} a fronte di fallimenti casuali (\emph{random failures}). Teoricamente, si ricaverà la frazione critica di nodi rimossi $f_c = 1 - 1/\langle k \rangle$ necessaria per causare il collasso funzionale del sistema. Questo processo verrà riprodotto computazionalmente, allo scopo di estrarre empiricamente le soglie di percolazione al variare della connettività iniziale e verificare tramite fit la validità della legge teorica.
+    \item \textbf{Percolazione inversa e robustezza:} Valutazione teorica e numerica della stabilità del \emph{network} a fronte di fallimenti casuali (\emph{random failures}). Teoricamente, si ricaverà la frazione critica di nodi rimossi $f_c = 1 - 1/\langle k \rangle$ necessaria per causare il collasso funzionale del sistema. Questo processo verrà riprodotto computazionalmente, allo scopo di ricavare le soglie di percolazione al variare della connettività iniziale e verificare tramite fit la validità della legge teorica.
 \end{itemize}
+
 \section{Elementi di teoria dei grafi}
 Prima di addentrarci nell'analisi del modello di ERG, è necessario introdurre alcuni concetti fondamentali della teoria dei grafi \cite{barabasi2016network}. Un grafo $G$ è costituito da un insieme di nodi e un insieme di link che connettono coppie di nodi, rappresentando un'interazione tra di essi. La dimensione del grafo è data dal numero di nodi $N$, mentre la connettività è data dal numero totale di link $L$.
 Una proprietà fondamentale di ciascun nodo è il suo grado $k$, che rappresenta il numero di link che esso possiede verso altri nodi.
@@ -181,7 +184,7 @@ Questo risultato mostra che la robustezza di questo network dipende unicamente d
 Per verificare le previsioni teoriche, sono state condotte simulazioni numeriche in Python utilizzando la libreria \emph{igraph}. Il codice sviluppato per la simulazione è disponibile online nella relativa repository su GitHub \cite{codice}.
 
 \subsection{Transizione di fase}
-Per quanto riguarda la transizione di fase, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ nodi per diversi valori di $\langle k \rangle \in [0, 5]$ . Per ogni grafo, è stata calcolata la dimensione della componente gigante $S$  (\cref{fig:S}) e la suscettività $\chi$  (\cref{fig:chi}): per ciascun valore di $\langle k \rangle$ è stato associato un valore medio di $S$ e $\chi$ calcolato sull'ensemble di grafi, con incertezza data dalla deviazione standard. Per ottenere un'analisi quantitativa, si sono eseguiti fit dei dati simulati con le leggi di potenza previste dalla teoria della percolazione \eqref{eq:order_parameter} \eqref{eq:susceptibility}, al fine di estrarre gli esponenti critici $\beta$ e $\gamma$ e confrontarli con i valori teorici.
+Per quanto riguarda la transizione di fase, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ nodi per diversi valori di $\langle k \rangle \in [0, 5]$ . Per ogni grafo, è stata calcolata la dimensione della componente gigante $S$  \cref{fig:S} e la suscettività $\chi$  \cref{fig:chi}: per ciascun valore di $\langle k \rangle$ è stato associato un valore medio di $S$ e $\chi$ calcolato sull'ensemble di grafi, con incertezza data dalla deviazione standard. Per ottenere un'analisi quantitativa, si sono eseguiti fit dei dati simulati con le leggi di potenza previste dalla teoria della percolazione \eqref{eq:order_parameter} \eqref{eq:susceptibility}, al fine di estrarre gli esponenti critici $\beta$ e $\gamma$ e confrontarli con i valori teorici.
 
 \begin{figure}[htbp]
     \centering
@@ -239,7 +242,7 @@ I risultati dei fit e i rispettivi valori teorici sono:
 Nonostante a livello qualitativo i dati simulati mostrino un comportamento coerente con le previsioni teoriche, a livello quantitativo si osservano deviazioni significative dagli esponenti critici teorici. Queste discrepanze potrebbero essere attribuite a diversi fattori, tra cui effetti di finite-size dovuti alla dimensione finita della rete simulata.
 
 \subsection{Percolazione inversa}
-Per quanto riguarda la percolazione inversa, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ per diversi valori di $\langle k \rangle \in [2 , 11]$. Per ogni grafo, è stata rimossa una frazione $f$ di nodi scelti casualmente, e per diversi valori di $f \in [0,1]$ è stata calcolata la dimensione della componente gigante $S$ (normalizzata rispetto alla dimensione originale della componente gigante $S(0)$) mediando su tutti i grafi dell'ensemble, usando come incertezza la deviazione standard (\cref{fig:percolation}). Per ogni valore di $\langle k \rangle$, è stata ricavata la soglia critica di percolazione $f_c$ effettuando un fit lineare in corrispondenza di tale punto cercando l'intercetta sull'asse x; i valori ottenuti sono poi stati riportati nel grafico (\cref{fig:fc}), nel quale si è eseguito un fit con la distribuzione teorica
+Per quanto riguarda la percolazione inversa, è stato creato un ensemble di $M = 20$ grafi casuali $G(N, p)$ con $N = 10^5$ per diversi valori di $\langle k \rangle \in [2 , 11]$. Per ogni grafo, è stata rimossa una frazione $f$ di nodi scelti casualmente, e per diversi valori di $f \in [0,1]$ è stata calcolata la dimensione della componente gigante $S$ (normalizzata rispetto alla dimensione originale della componente gigante $S(0)$) mediando su tutti i grafi dell'ensemble, usando come incertezza la deviazione standard \cref{fig:percolation}. Per ogni valore di $\langle k \rangle$, è stata ricavata la soglia critica di percolazione $f_c$ effettuando un fit lineare in corrispondenza di tale punto cercando l'intercetta sull'asse x; i valori ottenuti sono poi stati riportati nel grafico \cref{fig:fc}, nel quale si è eseguito un fit con la distribuzione teorica
 \begin{equation}
     f_c = 1 - \frac{\alpha}{\langle k \rangle}
 \end{equation}
@@ -278,7 +281,7 @@ Sia $u$ la frazione di nodi che non appartengono alla componente gigante (GC) e 
 \begin{equation}
     u = 1 - S
 \end{equation}
-Un nodo $i$ non appartiene alla GC se, per ogni altro nodo $j$, o non esiste un arco ($1-p$) oppure esiste un arco ma $j$ non è nella GC ($pu$). La probabilità totale per un singolo nodo $j$ è
+Un nodo $i$ non appartiene alla GC se, per ogni altro nodo $j$, o non esiste un link ($1-p$) oppure esiste un link ma $j$ non è nella GC ($pu$). La probabilità totale per un singolo nodo $j$ è
 $1 - p + pu$.
 Considerando tutti gli $N-1$ possibili vicini, la probabilità che $i$ non sia connesso alla GC è:
 \begin{equation}
