@@ -1,11 +1,14 @@
 name: Build and release Relazione
 on:
   push:
-    paths: 
+    paths:
       - 'relazione/**'
       - 'presentazione/**'
   workflow_dispatch:
-  
+
+permissions:
+  contents: write
+
 jobs:
   build_and_upload:
     runs-on: ubuntu-latest
@@ -19,7 +22,7 @@ jobs:
           working_directory : relazione
           root_file: relazione.tex
           latexmk_use_lualatex: true
-      
+
       - name: Compile LaTeX (presentazione)
         uses: xu-cheng/latex-action@v3
         with:
@@ -29,7 +32,7 @@ jobs:
 
       - name: Get timestamp
         run: echo "TIMESTAMP=$(date +'%Y-%m-%d %T')" >> $GITHUB_ENV
-      
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
