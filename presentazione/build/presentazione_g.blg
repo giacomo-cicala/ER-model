@@ -1,5 +1,0 @@
-[0] Config.pm:307> INFO - This is Biber 2.17
-[0] Config.pm:310> INFO - Logfile is '/home/giacomo/sistemi_complessi/presentazione/build/presentazione_g.blg'
-[79] biber:340> INFO - === Mon Mar  2, 2026, 14:28:15
-[339] Utils.pm:398> ERROR - Cannot find 'presentazione_g.bcf'!
-[339] Biber.pm:135> INFO - ERRORS: 1
