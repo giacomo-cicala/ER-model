@@ -14,7 +14,7 @@
 \usepackage{hyperref}
 \usepackage{bookmark}
 
-\title[Percolazione e Robustezza]{Percolazione e robustezza nelle reti complesse\\ \large Analisi della transizione di fase nel modello Erdős-Rényi-Gilbert}
+\title[Percolazione e Robustezza]{Percolazione e robustezza nelle reti complesse:\\ \large analisi della transizione di fase nel modello Erdős-Rényi-Gilbert}
 \author{Giacomo Cicala}
 \institute[]{Corso di laurea triennale in Fisica}
 \date{\today}
@@ -31,12 +31,12 @@
 \begin{frame}{Introduzione e Obiettivi}
     \begin{itemize}
         \item \textbf{Contesto:} Lo studio dei sistemi complessi tramite la \emph{Network Science} permette di comprendere l'emersione di proprietà macroscopiche a partire da interazioni locali.
-        \item \textbf{Obiettivo Centrale:} Analizzare la stabilità strutturale delle reti tramite la teoria della \emph{percolazione} applicata al modello "nullo" di Erdős-Rényi-Gilbert (ERG).
-        \item \textbf{Fasi dello studio:}
+        \item \textbf{Argomento:} Studio della connettività e robustezza delle reti tramite la teoria della \emph{percolazione} applicata al modello "nullo" di Erdős-Rényi-Gilbert (ERG).
+        \item \textbf{Obiettivi:}
               \begin{itemize}
                   \item Analisi teorica e computazionale dei \textbf{fenomeni critici} (emersione della \emph{componente gigante}).
                   \item Valutazione della \textbf{robustezza} a fallimenti casuali (\emph{percolazione inversa}).
-                  \item Confronto tra simulazioni numeriche e teoria di campo medio.
+                  \item Confronto tra simulazioni numeriche e teoria.
               \end{itemize}
     \end{itemize}
 \end{frame}
@@ -44,9 +44,9 @@
 % SLIDE 2: MODELLO ERG
 \begin{frame}{Il Modello di Erdős-Rényi-Gilbert}
     Il modello ERG $G(N, p)$ descrive un grafo di $N$ nodi in cui ogni coppia è connessa da un link con probabilità $p$.
-    
+
     \vspace{0.5cm}
-    \textbf{Proprietà topologiche fondamentali:}
+    \textbf{Proprietà fondamentali:}
     \begin{itemize}
         \item Grado medio: $\langle k \rangle = \frac{2L}{N} = p(N-1)$
         \item Nel limite di grandi reti ($N \to \infty$) con $\langle k \rangle$ finito, la distribuzione dei gradi tende a una \textbf{Poissoniana}:
@@ -54,19 +54,19 @@
                   P(k) = \frac{\langle k \rangle^k e^{-\langle k \rangle}}{k!}
               \end{equation*}
     \end{itemize}
-    Questo modello privo di correlazioni funge da riferimento base, analogo al \emph{gas ideale} in termodinamica.
+    Questo modello privo di correlazioni funge da riferimento base.
 \end{frame}
 
 % SLIDE 3: TRANSIZIONE DI FASE E GC
 \begin{frame}{Transizione di fase e Componente Gigante}
     All'aumentare della probabilità $p$ (e quindi di $\langle k \rangle$), la rete passa improvvisamente da uno stato frammentato a uno globalmente connesso.
-    
+
     \vspace{0.3cm}
     La \textbf{Componente Gigante (GC)} è una componente di nodi la cui dimensione è estensiva (proporzionale a $N$). La frazione di nodi $S$ che vi appartengono obbedisce all'equazione trascendente:
     \begin{equation*}
         S = 1 - e^{-\langle k \rangle S}
     \end{equation*}
-    
+
     \vspace{0.3cm}
     Risolvendo questa equazione, si individua la \textbf{soglia critica} in corrispondenza della quale emerge l'ordine macroscopico:
     \begin{equation*}
@@ -75,17 +75,17 @@
 \end{frame}
 
 % SLIDE 4: ESPONENTI CRITICI E SUSCETTIVITA
-\begin{frame}{Metriche Critiche: Parametro d'Ordine e Suscettività}
+\begin{frame}{Parametro d'Ordine e Suscettività}
     La transizione di fase continua è caratterizzata da leggi di potenza:
-    
+
     \begin{itemize}
         \item \textbf{Parametro d'ordine ($S$):}
               \begin{equation*}
                   S \sim (\langle k \rangle - \langle k \rangle_c)^\beta \quad\quad \langle k \rangle \to \langle k \rangle_c^+
               \end{equation*}
               Espandendo in serie di Taylor $S = 1 - e^{-\langle k \rangle S}$, si ricava il valore teorico $\beta = 1$.
-              
-        \item \textbf{Suscettività topologica ($\chi$):} Dimensione media dei cluster finiti.
+
+        \item \textbf{Suscettività ($\chi$):} Dimensione media dei cluster finiti.
               \begin{equation*}
                   \chi \sim |\langle k \rangle - \langle k \rangle_c|^{-\gamma} \quad\quad \langle k \rangle \to \langle k \rangle_c
               \end{equation*}
@@ -96,7 +96,7 @@
 % SLIDE 5: ROBUSTEZZA E PERCOLAZIONE INVERSA
 \begin{frame}{Percolazione Inversa e Robustezza}
     Cosa succede se rimuoviamo casualmente una frazione $f$ di nodi (\emph{random failures})?
-    
+
     \vspace{0.3cm}
     Applicando il \textbf{Criterio di Molloy-Reed} per la componente gigante:
     \begin{equation*}
@@ -113,26 +113,24 @@
 % SLIDE 6: SIMULAZIONI 1
 \begin{frame}{Simulazioni: Transizione di Fase}
     \textbf{Setup:} Ensemble di $M=20$ grafi con $N=10^5$ nodi in Python (\texttt{igraph}).
-    
+
     \vspace{0.3cm}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
             % Sostituisci con il tuo \includegraphics effettivo
-            \includegraphics[width=0.9\linewidth, height=3cm]{S_fit.png}
-            \footnotesize{Fit parametro d'ordine $S$}
+            \includegraphics[width=1\linewidth, height=4cm]{S_fit.png}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=0.9\linewidth, height=3cm]{chi_fit.png}
-            \footnotesize{Fit suscettività $\chi$}
+            \includegraphics[width=1\linewidth, height=4cm]{chi_fit.png}
         \end{column}
     \end{columns}
     \vspace{0.3cm}
     \textbf{Risultati dei Fit:}
     \begin{itemize}
-        \item $\beta_{\text{fit}} = 0.94 \pm 0.04$ \hfill (Teorico: $\beta = 1$)
-        \item $\gamma_{\text{fit}} = 0.997 \pm 0.001$ \hfill (Teorico: $\gamma = 1$)
+        \item $\beta_{\text{fit}} = 0.94 \pm 0.04  \quad\quad\quad \tilde{\chi_\beta}^2 = 4.5 $  \hfill (Teorico: $\beta = 1$)
+        \item $\gamma_{\text{fit}} = 0.997 \pm 0.001  \quad\quad\quad \tilde{\chi_\gamma}^2 = 663 $ \hfill (Teorico: $\gamma = 1$)
     \end{itemize}
     Buon accordo qualitativo, ma forte deviazione quantitativa nel test $\tilde{\chi}^2$.
 \end{frame}
@@ -140,36 +138,34 @@
 % SLIDE 7: SIMULAZIONI 2
 \begin{frame}{Simulazioni: Percolazione Inversa}
     Rimozione casuale progressiva dei nodi (\emph{f}) per estrarre la soglia di frammentazione misurata al variare di $\langle k \rangle$.
-    
+
     \vspace{0.3cm}
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=0.9\linewidth, height=3cm]{perc.png}
-            \footnotesize{Collasso della GC: $S(f)/S(0)$}
+            \includegraphics[width=1\linewidth, height=4cm]{perc.png}
         \end{column}
         \begin{column}{0.5\textwidth}
             \centering
-            \includegraphics[width=0.9\linewidth, height=3cm]{tresh.png}
-            \footnotesize{Soglia critica $f_c$ in funzione di $\langle k \rangle$}
+            \includegraphics[width=1\linewidth, height=4cm]{tresh.png}
         \end{column}
     \end{columns}
     \vspace{0.3cm}
     \textbf{Fit Teorico:} $f_c = 1 - \frac{\alpha}{\langle k \rangle}$
     \begin{itemize}
-        \item $\alpha_{\text{fit}} = 0.985 \pm 0.001$ \hfill (Teorico: $\alpha = 1$)
+        \item $\alpha_{\text{fit}} = 0.985 \pm 0.001 \quad\quad\quad \tilde{\chi_\alpha}^2 = 55$ \hfill (Teorico: $\alpha = 1$)
     \end{itemize}
 \end{frame}
 
 % SLIDE 8: FINITE SIZE SCALING
 \begin{frame}{Discussione: Effetti di Taglia Finita}
     \textbf{Come spieghiamo i $\tilde{\chi}^2$ alti e le deviazioni dei parametri?}
-    
+
     \vspace{0.5cm}
-    Non si tratta di un fallimento del modello di campo medio, ma dei \textbf{Finite-Size Effects}:
+    Non si tratta di un fallimento del modello, ma dei \textbf{Finite-Size Effects}:
     \begin{itemize}
         \item Le reti simulate hanno dimensione finita ($N=10^5$).
-        \item La transizione, teoricamente netta, viene "arrotondata" dalle fluttuazioni topologiche, smussando le divergenze (cuspidi per $S$ e asintoti per $\chi$).
+        \item La transizione, teoricamente netta viene "arrotondata", smussando le divergenze (cuspidi per $S$ e asintoti per $\chi$).
         \item Nella percolazione inversa, la distorsione è peggiore ad alti $\langle k \rangle$, causando una parziale sovrastima sperimentale di $f_c$ rispetto all'asintoto teorico e forzando $\alpha_{\text{fit}}$ a deviare lievemente dall'unità.
     \end{itemize}
 \end{frame}
@@ -178,9 +174,9 @@
 \begin{frame}{Conclusioni}
     \begin{itemize}
         \item La teoria della percolazione descrive con precisione la transizione da fase frammentata a macroscopicamente connessa nel modello ERG, con soglia critica $\langle k \rangle_c = 1$.
-        \item Le simulazioni numeriche confermano le previsioni teoriche di \textbf{campo medio}, validando gli esponenti critici e l'andamento della soglia di frammentazione.
-        \item Le deviazioni sperimentali sono matematicamente giustificabili attraverso lo \textbf{scaling di taglia finita}.
-        \item Si dimostra quantitativamente che la tolleranza ai fallimenti (\emph{random failures}) di reti prive di correlazione dipende unicamente dalla connettività media, rendendole topologie \textbf{altamente vulnerabili}.
+        \item Le simulazioni numeriche confermano le previsioni teoriche, validando gli esponenti critici e l'andamento della soglia di frammentazione.
+        \item Le deviazioni sperimentali sono matematicamente giustificabili attraverso gli \textbf{effetti di taglia finita}.
+        \item Si dimostra quantitativamente che la tolleranza ai fallimenti (\emph{random failures}) di reti prive di correlazione dipende unicamente dalla connettività media, rendendole \textbf{poco robuste} e \textbf{altamente vulnerabili} a questo tipo di attacco.
     \end{itemize}
 \end{frame}
 
@@ -192,7 +188,7 @@
 
     \small
     La relazione completa, i dati estratti e le macro Python per l'analisi sono reperibili sulla repository GitHub pubblica associata al progetto:
-    
+
     \url{https://github.com/giacomo-cicala/ER-model}
 \end{frame}
 
