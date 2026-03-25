@@ -2,6 +2,7 @@
 \usepackage[italian]{babel}
 \usepackage[a4paper, margin=1.97cm]{geometry}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{amsmath}
 \usepackage{subcaption}
 \usepackage[dvipsnames]{xcolor}
@@ -41,7 +42,6 @@
 
 \begin{document}
 \maketitle
-
 \renewcommand{\abstractname}{Abstract}
 
 \section{Introduzione}
@@ -49,9 +49,9 @@ Lo studio dei sistemi complessi ha ricevuto un grande contributo dallo sviluppo 
 In questo ambito, uno dei pricipali obiettivi è lo studio dell'emersione spontanea di proprietà macroscopiche a partire da interazioni locali. In particolare, risulta interessante e utile comprendere i meccanismi che garantiscono la connettività globale del sistema e, di riflesso, la sua \emph{robustezza} a fronte di fallimenti casuali dei componenti (\emph{random failures}).
 
 In questo elaborato verrà analizzata la connettività e la robustezza delle reti attraverso lo studio della \emph{teoria della percolazione}, applicata al modello di grafi casuali di Erdős-Rényi-Gilbert (ERG) $G(N, p)$.
-Come discusso da Newman \cite{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto da isole disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che connette l'intero sistema.
+Come discusso da Newman \cite{newman2018networks}, la percolazione rappresenta una delle transizioni di fase geometriche più semplici e fondamentali: essa descrive il passaggio improvviso da uno stato frammentato, in cui il sistema è composto piccole componenti disconnesse, a uno stato connesso dominato da una \emph{componente gigante} che connette l'intero sistema.
 
-Sebbene le reti reali presentino spesso correlazioni complesse, il modello di Erdős-Rényi-Gilbert costituisce il "modello nullo" di riferimento, analogo al gas ideale in termodinamica.
+Sebbene le reti reali presentino spesso correlazioni complesse, il modello di Erdős-Rényi-Gilbert costituisce il "modello nullo" di riferimento analogo al gas ideale in termodinamica, per cui il suo studio risulta rilevante.
 
 \subsection{Obiettivi del lavoro}
 Utilizzando il modello di ERG come sistema di riferimento analitico, il lavoro si prefigge i seguenti obiettivi:
@@ -133,7 +133,7 @@ Possiamo distinguere quattro regimi topologici distinti \cite{barabasi2016networ
     \item \textbf{Regime completamente connesso ($\langle k \rangle > \ln N$):} In questo regime, il numero di aspettazione di nodi isolati è inferiore a 1, e la rete è quasi sicuramente completamente connessa.
 \end{enumerate}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{regimes.png}
     \caption{Rappresentazione schematica dei quattro regimi topologici distinti in funzione del grado medio $\langle k \rangle$. Immagine presa da \cite[Cap. 3.6]{barabasi2016network}.}
@@ -161,11 +161,11 @@ Come ricavato in \cref{sec:esponenti}, nell'intorno destro del punto critico $\l
 \section{Percolazione inversa e robustezza}
 Una delle caratteristiche di maggiore interesse per un network è la sua \textbf{robustezza}, ovvero la capacità di mantenere la connettività globale nonostante la rimozione di nodi o link. La teoria della percolazione fornisce un quadro teorico per analizzare questo aspetto attraverso il concetto di \emph{percolazione inversa}, in cui si rimuovono nodi o link in modo casuale o mirato, e si studia come ciò influenzi la dimensione della componente gigante.
 
-Analizziamo il caso della rimozione casuale di una frazione $f$ di nodi. Utilizzando il criterio di Molloy-Reed \cite{barabasi2016network}:
+Analizziamo il caso della rimozione casuale di una frazione $f$ di nodi. Utilizzando il criterio di Molloy-Reed \cref{sec:molloy_reed}:
 \begin{equation}
     \frac{\langle k^2 \rangle}{\langle k \rangle} > 2
 \end{equation}
-il quale determina la condizione necessaria affinché esista una componente gigante per un generico network con distribuzione dei gradi $P(k)$, è possibile derivare la soglia critica di percolazione $f_c$ \cite{barabasi2016network}:
+il quale determina la condizione necessaria affinché esista una componente gigante per un generico network con distribuzione dei gradi $P(k)$, è possibile derivare la soglia critica di percolazione $f_c$ \cref{sec:perc_tresh}:
 \begin{equation} \label{eq:perc_tresh}
     f_c = 1 - \frac{1}{\frac{\langle k^2 \rangle}{\langle k \rangle} - 1}
 \end{equation}
@@ -178,7 +178,6 @@ Sostituendo \eqref{eq:second_moment} in  \eqref{eq:perc_tresh}, si ottiene che l
     f_c = 1 - \frac{1}{\langle k \rangle}
 \end{equation}
 Questo risultato mostra che la robustezza di questo network dipende unicamente dal grado medio $\langle k \rangle$: reti con grado medio più elevato sono più robuste alla rimozione casuale di nodi, poiché la soglia critica $f_c$ è più alta. Tuttavia, è sufficiente rimuovere una frazione $f_c < f < 1$ di nodi per far collassare la rete, evidenziando la vulnerabilità intrinseca del modello di ERG a fallimenti casuali.
-\ext{Questo comportamento è in contrasto con reti con distribuzioni dei gradi più eterogenee (come le reti scale-free), che possono essere molto più robuste a fallimenti casuali \cite{barabasi2016network}}.
 
 \section{Simulazione e risultati}
 Per verificare le previsioni teoriche, sono state condotte simulazioni numeriche in Python utilizzando la libreria \emph{igraph}. Il codice sviluppato per la simulazione è disponibile online nella relativa repository su GitHub \cite{codice}.
@@ -248,7 +247,7 @@ Per quanto riguarda la percolazione inversa, è stato creato un ensemble di $M =
 \end{equation}
 dove $\alpha$ è un parametro di fit, per verificarne la coerenza con la teoria. Il risultato del fit e il rispettivo valore teorico sono:
 \begin{equation*}
-    \tilde{\chi} = 55 \quad\quad \alpha_{\text{fit}} = 0.985 \pm 0.001 \quad\quad \alpha_{\text{teo}} = 1
+    \tilde{\chi_\alpha}^2 = 55 \quad\quad \alpha_{\text{fit}} = 0.985 \pm 0.001 \quad\quad \alpha_{\text{teo}} = 1
 \end{equation*}
 
 \begin{figure}[htbp]
@@ -268,7 +267,7 @@ dove $\alpha$ è un parametro di fit, per verificarne la coerenza con la teoria.
 Anche in questo caso, nonostante a livello qualitativo i dati simulati mostrino un comportamento coerente con le previsioni teoriche, a livello quantitativo si osservano deviazioni significative dal valore teorico di $\alpha$ e un $\tilde{\chi}^2$ alto causato plausibilmente dalle basse incertezze statistiche e dalle deviazioni sistematiche di $f_c$ per $\langle k \rangle > 6$ causate da effetti di finite-size.
 
 \section{Conclusioni}
-In questo elaborato sono state analizzate la transizione di fase di percolazione e la robustezza strutturale nel modello di reti casuali di ERG. 
+In questo elaborato sono state analizzate la transizione di fase di percolazione e la robustezza strutturale nel modello di reti casuali di ERG.
 
 L'analisi teorica ha permesso di individuare la soglia critica $\langle k \rangle_c = 1$ per l'emergenza della componente gigante e di ricavare gli esponenti critici di campo medio $\beta = 1$ e $\gamma = 1$. Le simulazioni numeriche su \emph{ensemble} di grafi ($N = 10^5$ , M = 20) hanno confermato parzialmente tali previsioni: i fit asintotici per il parametro d'ordine $S$ e la suscettività $\chi$ hanno restituito esponenti $\beta_{\text{fit}} = 0.94 \pm 0.04$ e $\gamma_{\text{fit}} = 0.997 \pm 0.001$.. Le discrepanze quantitative osservate, evidenziate dagli elevati valori del $\tilde{\chi}^2$, possono essere giustificate dagli effetti di \emph{finite-size}, che introducono un arrotondamento della singolarità al punto critico per via della taglia finita della rete.
 
@@ -343,6 +342,84 @@ quindi la suscettività diverge al punto critico con un esponente critico $\gamm
     \chi \sim |\langle k \rangle - 1|^{-1} \quad\quad \langle k \rangle \to 1
 \end{equation}
 
+\subsection{Criterio di Molloy-Reed}\label{sec:molloy_reed}
+L'obiettivo di questa sezione è derivare il criterio di Molloy-Reed, il quale permette di calcolare la soglia di percolazione per una rete arbitraria \cite{barabasi2016network}. Affinché esista una componente gigante, ogni nodo che vi appartiene deve essere connesso, in media, ad almeno altri due nodi. Di conseguenza, il grado medio $k_i$ di un nodo $i$ scelto casualmente all'interno della componente gigante deve essere almeno pari a 2.
+
+Indichiamo con $P(k_i \mid i \leftrightarrow j)$ la probabilità condizionata che un nodo della rete abbia grado $k_i$, sapendo che esso è connesso a un nodo $j$ appartenente alla componente gigante. Questa probabilità condizionata ci permette di determinare il grado atteso del nodo $i$ come:
+\begin{equation}
+    \langle k_i \mid i \leftrightarrow j \rangle = \sum_{k_i} k_i P(k_i \mid i \leftrightarrow j) = 2
+    \label{eq:cond_degree}
+\end{equation}
+In altre parole, $\langle k_i \mid i \leftrightarrow j \rangle$ deve eguagliare o superare il valore 2, che è la condizione affinché il nodo $i$ faccia parte della componente gigante in espansione (un link per essere raggiunto, almeno un link per continuare la catena). 
+
+Possiamo riscrivere la probabilità che compare nella sommatoria \eqref{eq:cond_degree} applicando il Teorema di Bayes:
+\begin{equation}
+    P(k_i \mid i \leftrightarrow j) = \frac{P(i \leftrightarrow j \mid k_i) P(k_i)}{P(i \leftrightarrow j)}
+\end{equation}
+Per una rete con distribuzione dei gradi $P(k)$, in assenza di correlazioni di grado, possiamo esprimere le probabilità di connessione come:
+\begin{equation}
+    P(i \leftrightarrow j) = \frac{2L}{N(N-1)} = \frac{\langle k \rangle}{N-1}, \quad\quad P(i \leftrightarrow j \mid k_i) = \frac{k_i}{N-1}
+\end{equation}
+Queste espressioni riflettono il fatto che possiamo scegliere tra $N-1$ nodi a cui collegarci, ciascuno con probabilità $1/(N-1)$, e che possiamo tentare questa operazione $k_i$ volte. Sostituendo questi termini nell'equazione del valore atteso \eqref{eq:cond_degree}, otteniamo:
+\begin{align}
+    \sum_{k_i} k_i P(k_i \mid i \leftrightarrow j) &= \sum_{k_i} k_i \frac{P(i \leftrightarrow j \mid k_i) P(k_i)}{P(i \leftrightarrow j)} \nonumber \\
+    &= \sum_{k_i} k_i \frac{k_i P(k_i)}{\langle k \rangle} \nonumber \\
+    &= \frac{1}{\langle k \rangle} \sum_{k_i} k_i^2 P(k_i) = \frac{\langle k^2 \rangle}{\langle k \rangle}
+\end{align}
+Imponendo la condizione iniziale per cui tale valore atteso deve essere strettamente maggiore di 2 per sostenere la componente gigante, arriviamo al criterio di Molloy-Reed:
+\begin{equation}
+    \frac{\langle k^2 \rangle}{\langle k \rangle} > 2
+\end{equation}
+\subsection{Soglia critica di percolazione}\label{sec:perc_tresh}
+Studiamo ora la robustezza della rete a fronte della rimozione casuale di una frazione $f$ di nodi \cite{barabasi2016network}. I nodi rimanenti costituiscono una frazione $p = 1 - f$ della rete originaria. 
+
+Per comprendere come si modificano i momenti della distribuzione dei gradi, consideriamo innanzitutto un singolo nodo che nella rete intatta aveva esattamente grado $k$. 
+Ogni suo vicino ha una probabilità $p = 1-f$ di non essere rimosso. Dunque la probabilità che un nodo di grado $k$ abbia grado $k'$ dopo la rimozione casuale è descritta da una distribuzione binomiale con $k$ tentativi e probabilità di successo $1-f$:
+\begin{equation}
+    P(k' \mid k) = \binom{k}{k'} f^{k - k'} (1-f)^{k'}
+\end{equation}
+
+Ricordando che per una distribuzione binomiale il valore atteso è $np$ e la varianza è $np(1-p)$, nel nostro caso il numero di tentativi corrisponde al grado originario ($n = k$) e la probabilità di successo alla sopravvivenza del vicino ($p = 1-f$). Per un nodo partente da grado $k$ si ha quindi:
+\begin{itemize}
+    \item $\langle k' \mid k \rangle$: $k(1-f)$
+    \item $\text{Var}(k' \mid k)$: $k(1-f)f$
+\end{itemize}
+Ricordando in generale che $ \sigma^{2} = \langle x^2 \rangle - \langle x \rangle^2 $, possiamo calcolare il secondo momento condizionato alla rimozione casuale:
+\begin{equation}
+    \langle k'^2 \mid k \rangle = \text{Var}(k' \mid k) + \langle k' \mid k \rangle^2 = k(1-f)f + k^2(1-f)^2
+\end{equation}
+
+A questo punto, per ottenere le quantità macroscopiche riferite all'intera rete danneggiata, è sufficiente calcolare la media pesata di questi risultati su tutti i possibili gradi iniziali $k$, moltiplicandoli per la probabilità $P(k)$ della distribuzione originaria.
+
+Per il nuovo grado medio $\langle k' \rangle$:
+\begin{equation}
+    \langle k' \rangle = \sum_{k} P(k) [k(1-f)] = (1-f) \sum_{k} k P(k)
+\end{equation}
+Riconoscendo che $\sum_{k} k P(k)$ è esattamente la definizione del grado medio iniziale $\langle k \rangle$, otteniamo:
+\begin{equation}
+    \langle k' \rangle = (1-f) \langle k \rangle
+    \label{eq:k_prime}
+\end{equation}
+Applicando lo stesso ragionamento per il nuovo momento secondo $\langle k'^2 \rangle$:
+\begin{align}
+    \langle k'^2 \rangle &= \sum_{k} P(k) \left[ k(1-f)f + k^2(1-f)^2 \right] \nonumber \\
+    &= f(1-f) \left[ \sum_{k} k P(k) \right] + (1-f)^2 \left[ \sum_{k} k^2 P(k) \right]
+\end{align}
+Anche in questo caso, riconoscendo i momenti della distribuzione originale all'interno delle parentesi quadre ($\langle k \rangle$ e $\langle k^2 \rangle$), ricaviamo l'equazione per il secondo momento della rete danneggiata:
+\begin{equation}
+    \langle k'^2 \rangle = f(1-f)\langle k \rangle + (1-f)^2\langle k^2 \rangle
+    \label{eq:k2_prime}
+\end{equation}
+
+Per calcolare la soglia critica $f_c$ alla quale la componente gigante collassa, applichiamo il criterio di Molloy-Reed alla rete danneggiata:
+\begin{equation}
+    \frac{\langle k'^2 \rangle}{\langle k' \rangle} = 2
+\end{equation}
+Sostituendo le espressioni \eqref{eq:k_prime} e \eqref{eq:k2_prime} e isolando $f_c$, si ottiene:
+\begin{equation}
+    f_c = 1 - \frac{1}{\frac{\langle k^2 \rangle}{\langle k \rangle} - 1}
+    \label{eq:fc_general}
+\end{equation}
 
 \printbibliography[heading=bibintoc, title={Bibliografia}]
 
